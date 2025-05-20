@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Investiments from "./pages/Investiments";
 import Services from "./pages/Services";
+import "./commons/i18n";
 
 export default function Home() {
   const [isClient, setIsClient] = useState(false);
@@ -32,7 +33,7 @@ export default function Home() {
           <Sidebar />
           <Box sx={{ flex: 1, overflow: "auto", padding: 2 }}>
             <Routes>
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />
               <Route path="/investiments" element={<Investiments />} />
               <Route path="/services" element={<Services />} />

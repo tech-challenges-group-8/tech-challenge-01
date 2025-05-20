@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, List, ListItemButton, ListItemText, useTheme } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 interface SidebarItemProps {
   to: string;
@@ -31,6 +32,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
 
 const Sidebar = () => {
   const theme = useTheme();
+  const { t } = useTranslation();
 
   return (
     <Box
@@ -41,10 +43,10 @@ const Sidebar = () => {
       }}
     >
       <List sx={{ width: "100%" }}>
-        <SidebarItem to="/dashboard" text="Início" />
-        <SidebarItem to="/transactions" text="Transferências" />
-        <SidebarItem to="/investiments" text="Investimentos" />
-        <SidebarItem to="/services" text="Outros serviços" />
+        <SidebarItem to="/" text={t("sidebar.home")} />
+        <SidebarItem to="/transactions" text={t("sidebar.transactions")} />
+        <SidebarItem to="/investiments" text={t("sidebar.investments")} />
+        <SidebarItem to="/services" text={t("sidebar.services")} />
       </List>
     </Box>
   );

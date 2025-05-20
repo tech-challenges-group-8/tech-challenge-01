@@ -14,9 +14,11 @@
     "@emotion/react": "^11.0.0",
     "@emotion/styled": "^11.0.0",
     "@mui/material": "^5.0.0",
+    "i18next": "^25.2.0",
     "next": "15.3.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-i18next": "^15.5.1",
     "react-router-dom": "^6.30.0"
   },
   "devDependencies": {

@@ -9,7 +9,7 @@ const Header = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar sx={{ justifyContent: "space-between", height: "86px" }}>
+      <Toolbar sx={{ justifyContent: "space-between", height: "68px" }}>
         <Box sx={{ visibility: { xs: "hidden", md: "visible" } }}>
           {/* Placeholder for balance on mobile */}
         </Box>
