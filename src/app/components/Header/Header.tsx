@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { AppBar, Toolbar, Typography, Box, Avatar, useTheme } from '@mui/material';
 

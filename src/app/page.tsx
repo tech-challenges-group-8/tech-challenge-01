@@ -2,11 +2,11 @@
 
 import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { useEffect, useState } from "react";
-import Header from "./components/Header/Header";
-import Sidebar from "./components/Sidebar/Sidebar";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import theme from "./theme";
+import Header from "./components/Header/Header";
+import Sidebar from "./components/Sidebar/Sidebar";
+import theme from "./styles/theme";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
 import Investiments from "./pages/Investiments";

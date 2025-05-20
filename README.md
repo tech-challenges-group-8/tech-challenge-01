@@ -1,36 +1,78 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Financial Management App
+
+This is a **Financial Management** application built with [Next.js](https://nextjs.org), [Material-UI](https://mui.com/), and [React Router](https://reactrouter.com/). The app provides a clean and responsive interface for managing financial data, including dashboards, transactions, investments, and services.
+
+## Features
+
+- **Next.js**: Server-side rendering and optimized performance.
+- **Material-UI**: Modern and accessible UI components.
+- **React Router**: Client-side routing for seamless navigation.
+- **ESLint**: Code linting with custom rules for clean and maintainable code.
+- **TypeScript**: Strongly typed codebase for better developer experience.
+
+## Prerequisites
+
+Make sure you have the following installed on your system:
+
+- [Node.js](https://nodejs.org/) (v23 or higher recommended)
+- [npm](https://www.npmjs.com/) (comes with Node.js) or [yarn](https://yarnpkg.com/)
 
 ## Getting Started
 
-First, run the development server:
+First, clone the repository and install the dependencies:
+
+```bash
+git clone https://github.com/your-username/financial-management.git
+cd financial-management
+npm install
+```
+
+## Running the Development Server
+
+To start the development server, run:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
+Open http://localhost:3000 in your browser to view the app.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Building for Production
+To build the app for production, run:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
+The optimized production build will be output to the .next directory. You can then start the production server with:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run start
+```
+## Linting the Code
+To check for linting issues, run:
 
-## Learn More
+```bash
+npm run lint
+```
+To automatically fix linting issues, run:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run lint:fix
+```
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Here’s an overview of the project structure:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+````
+financial-management/
+├── src/
+│   ├── app/
+│   │   ├── components/    # Reusable UI components (e.g., Header, Sidebar)
+│   │   ├── pages/         # Application pages (e.g., Dashboard, Transactions)
+│   │   ├── styles/        # Theme and global styles
+│   │   └── app.tsx        # Main application entry point
+├── public/                # Static assets (e.g., images, fonts)
+├── .eslintrc.json         # ESLint configuration
+├── package.json           # Project dependencies and scripts
+├── README.md              # Project documentation
+└── tsconfig.json          # TypeScript configuration
+```

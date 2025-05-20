@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import { Box, List, ListItemButton, ListItemText, useTheme } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
