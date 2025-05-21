@@ -16,13 +16,13 @@ const Header = () => {
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Typography
             variant="body2"
-            sx={{ marginRight: 5, color: theme.palette.primary.light }}
+            sx={{ marginRight: 3, color: theme.palette.secondary.contrastText }}
           >
             {user.name}
           </Typography>
           <Avatar
             sx={{
-              border: `1px solid ${theme.palette.primary.contrastText}`,
+              border: `2px solid ${theme.palette.primary.contrastText}`,
               color: theme.palette.primary.contrastText,
               backgroundColor: "transparent",
               width: "40px",

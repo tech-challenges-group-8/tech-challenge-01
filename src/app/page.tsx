@@ -4,8 +4,8 @@ import { ThemeProvider, CssBaseline, Box } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-import Header from "./components/Header/Header";
-import Sidebar from "./components/Sidebar/Sidebar";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
 import theme from "./styles/theme";
 import Dashboard from "./pages/Dashboard";
 import Transactions from "./pages/Transactions";
@@ -29,7 +29,7 @@ export default function Home() {
       <CssBaseline />
       <BrowserRouter>
         <Header />
-        <Box sx={{ display: "flex", height: "calc(100vh - 86px)" }}>
+        <Box sx={{ display: "flex", height: "calc(100vh - 68px)" }}>
           <Sidebar />
           <Box sx={{ flex: 1, overflow: "auto", padding: 2 }}>
             <Routes>

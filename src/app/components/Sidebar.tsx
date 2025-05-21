@@ -14,7 +14,15 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
   const isActive = location.pathname === to;
 
   return (
-    <ListItemButton component={Link} to={to}>
+    <ListItemButton
+      component={Link}
+      to={to}
+      sx={{
+        borderLeft: isActive
+          ? `3px solid ${theme.palette.primary.contrastText}`
+          : "none",
+      }}
+    >
       <ListItemText
         primary={text}
         primaryTypographyProps={{
@@ -37,7 +45,7 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-        width: 200,
+        width: 180,
         bgcolor: theme.palette.background.paper,
         boxShadow: 2,
       }}
