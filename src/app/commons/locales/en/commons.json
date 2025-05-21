@@ -1,0 +1,8 @@
+{
+  "sidebar": {
+    "home": "Home",
+    "transactions": "Transactions",
+    "investments": "Investments",
+    "services": "Other Services"
+  }
+}

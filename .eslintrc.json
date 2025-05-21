@@ -1,0 +1,46 @@
+{
+    "extends": [
+        "next/core-web-vitals",
+        "plugin:import/recommended",
+        "plugin:storybook/recommended"
+    ],
+    "plugins": [
+        "unused-imports",
+        "import"
+    ],
+    "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "unused-imports/no-unused-imports": "error",
+        "unused-imports/no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "varsIgnorePattern": "^_",
+                "args": "after-used",
+                "argsIgnorePattern": "^_"
+            }
+        ],
+        "import/order": [
+            "warn",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "parent",
+                    "sibling",
+                    "index"
+                ],
+                "newlines-between": "always"
+            }
+        ],
+        "import/no-unresolved": "error",
+        "import/no-duplicates": "warn"
+    },
+    "ignorePatterns": [
+        "node_modules/",
+        ".next/",
+        "dist/"
+    ]
+}
