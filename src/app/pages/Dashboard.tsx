@@ -1,13 +1,18 @@
-import React from "react";
-import { Container, Typography } from "@mui/material";
+import BalanceCard from "@/app/components/BalanceCard";
+import NewTransactionCard from "@/app/components/NewTransactionCard";
+import { Box, Container } from "@mui/material";
 
 const Dashboard = () => {
   return (
-    <Container>
-      <Typography variant="h4" gutterBottom>
-        Dashboard
-      </Typography>
-    </Container>
+    <Box
+      sx={{
+        display: "grid",
+        gridGap: "16px",
+      }}
+    >
+      <BalanceCard />
+      <NewTransactionCard />
+    </Box>
   );
 };
 

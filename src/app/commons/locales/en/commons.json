@@ -4,5 +4,9 @@
     "transactions": "Transactions",
     "investments": "Investments",
     "services": "Other Services"
+  },
+  "balanceCard": {
+    "balance": "Balance",
+    "account": "Account"
   }
 }

@@ -1,6 +1,5 @@
 import { createTheme } from "@mui/material/styles";
-
-import { COLORS, TYPOGRAPHY, SPACING, SHAPE } from "./tokens";
+import { COLORS, SHAPE, SPACING, TYPOGRAPHY } from "./tokens";
 
 const theme = createTheme({
   palette: {
@@ -25,6 +24,7 @@ const theme = createTheme({
       disabled: COLORS.neutral[500],
     },
     action: {
+      active: COLORS.neutral[600],
       disabled: COLORS.neutral[300],
       hover: "#F0F0F0",
     },

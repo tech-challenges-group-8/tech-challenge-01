@@ -4,5 +4,9 @@
     "transactions": "Transferências",
     "investments": "Investimentos",
     "services": "Outros serviços"
+  },
+  "balanceCard": {
+    "balance": "Saldo",
+    "account": "Conta Corrente"
   }
 }

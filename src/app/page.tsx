@@ -29,9 +29,19 @@ export default function Home() {
       <CssBaseline />
       <BrowserRouter>
         <Header />
-        <Box sx={{ display: "flex", height: "calc(100vh - 68px)" }}>
+        <Box
+          sx={{
+            display: "flex",
+            height: "calc(100vh - 68px)",
+            backgroundColor: "#e4ede3",
+            padding: "16px",
+            gap: "16px",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Sidebar />
-          <Box sx={{ flex: 1, overflow: "auto", padding: 2 }}>
+          <Box>
             <Routes>
               <Route path="/" element={<Dashboard />} />
               <Route path="/transactions" element={<Transactions />} />

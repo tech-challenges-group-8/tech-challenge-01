@@ -19,7 +19,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
       to={to}
       sx={{
         borderLeft: isActive
-          ? `3px solid ${theme.palette.primary.contrastText}`
+          ? `3px solid ${theme.palette.action.active}`
           : "none",
       }}
     >
@@ -28,7 +28,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
         primaryTypographyProps={{
           sx: {
             color: isActive
-              ? theme.palette.primary.contrastText
+              ? theme.palette.action.active
               : theme.palette.text.primary,
             fontWeight: isActive ? "bold" : "normal",
           },
@@ -46,6 +46,8 @@ const Sidebar = () => {
     <Box
       sx={{
         width: 180,
+        height: "100%",
+        borderRadius: 2,
         bgcolor: theme.palette.background.paper,
         boxShadow: 2,
       }}
