@@ -5,6 +5,7 @@ import CardBackground from "@/app/components/CardBackground";
 import Box from "@mui/material/Box";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import "../commons/i18n";
 
 export default function DashboardLayout({
   children,
@@ -26,8 +27,15 @@ export default function DashboardLayout({
         }}
       >
         <Sidebar />
-        <BalanceCard />
-        <CardBackground>{children}</CardBackground>
+         <Box
+          sx={{
+            display: "grid",
+            gridGap: "16px",
+          }}
+        >
+          <BalanceCard />
+          <CardBackground>{children}</CardBackground>
+        </Box>
       </Box>
     </Box>
   );
