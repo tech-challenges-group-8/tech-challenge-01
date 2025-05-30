@@ -1,22 +1,31 @@
+"use client";
+
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemText,
+  useTheme,
+} from "@mui/material";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
-import { Box, List, ListItemButton, ListItemText, useTheme } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 interface SidebarItemProps {
-  to: string;
+  href: string;
   text: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ href, text }) => {
   const theme = useTheme();
-  const location = useLocation();
-  const isActive = location.pathname === to;
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <ListItemButton
-      component={Link}
-      to={to}
+      LinkComponent={Link}
+      href={href}
       sx={{
         borderLeft: isActive
           ? `3px solid ${theme.palette.action.active}`
@@ -53,10 +62,10 @@ const Sidebar = () => {
       }}
     >
       <List sx={{ width: "100%" }}>
-        <SidebarItem to="/" text={t("sidebar.home")} />
-        <SidebarItem to="/transactions" text={t("sidebar.transactions")} />
-        <SidebarItem to="/investiments" text={t("sidebar.investments")} />
-        <SidebarItem to="/services" text={t("sidebar.services")} />
+        <SidebarItem href="/" text={t("sidebar.home")} />
+        <SidebarItem href="/transactions" text={t("sidebar.transactions")} />
+        <SidebarItem href="/investiments" text={t("sidebar.investments")} />
+        <SidebarItem href="/services" text={t("sidebar.services")} />
       </List>
     </Box>
   );

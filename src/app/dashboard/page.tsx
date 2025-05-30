@@ -1,8 +1,8 @@
 import BalanceCard from "@/app/components/BalanceCard";
-import NewTransactionCard from "@/app/components/NewTransactionCard";
-import { Box, Container } from "@mui/material";
+import NewTransactionCard from "@/app/components/NewTransaction";
+import { Box } from "@mui/material";
 
-const Dashboard = () => {
+export default function Dashboard() {
   return (
     <Box
       sx={{
@@ -10,10 +10,7 @@ const Dashboard = () => {
         gridGap: "16px",
       }}
     >
-      <BalanceCard />
       <NewTransactionCard />
     </Box>
   );
-};
-
-export default Dashboard;
+}

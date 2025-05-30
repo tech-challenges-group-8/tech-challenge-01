@@ -1,3 +1,5 @@
+"use client";
+
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import {
   Box,

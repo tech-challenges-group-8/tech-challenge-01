@@ -1,56 +1,29 @@
-"use client";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 
-import { ThemeProvider, CssBaseline, Box } from "@mui/material";
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-
-import Header from "./components/Header";
-import Sidebar from "./components/Sidebar";
-import theme from "./styles/theme";
-import Dashboard from "./pages/Dashboard";
-import Transactions from "./pages/Transactions";
-import Investiments from "./pages/Investiments";
-import Services from "./pages/Services";
+import Dashboard from "@/app/dashboard/page";
+import { cookies } from "next/headers";
 import "./commons/i18n";
+import BodyHome from "./components/home/BodyHome";
+import FooterHome from "./components/home/FooterHome";
+import HeaderHome from "./components/home/HeaderHome";
+import theme from "./styles/theme";
 
-export default function Home() {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    // Prevents rendering on the server
-    return null;
-  }
+export default async function Home() {
+  const cookieStore = await cookies();
+  const isAuth =  cookieStore.get('auth')?.value === "true";
+  
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <BrowserRouter>
-        <Header />
-        <Box
-          sx={{
-            display: "flex",
-            height: "calc(100vh - 68px)",
-            backgroundColor: "#e4ede3",
-            padding: "16px",
-            gap: "16px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <Sidebar />
-          <Box>
-            <Routes>
-              <Route path="/" element={<Dashboard />} />
-              <Route path="/transactions" element={<Transactions />} />
-              <Route path="/investiments" element={<Investiments />} />
-              <Route path="/services" element={<Services />} />
-            </Routes>
-          </Box>
-        </Box>
-      </BrowserRouter>
+      {!isAuth ? (
+        <>
+          <HeaderHome />
+          <BodyHome />
+          <FooterHome />
+        </>
+      ) : (
+        <Dashboard />
+      )}
     </ThemeProvider>
   );
 }

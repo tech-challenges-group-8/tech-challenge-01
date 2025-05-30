@@ -1,14 +1,11 @@
-import React from "react";
 import { Container, Typography } from "@mui/material";
 
-const Services = () => {
+export default function Investiments() {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Outros serviços
+        Investimentos
       </Typography>
     </Container>
   );
-};
-
-export default Services;
+}
