@@ -1,3 +1,5 @@
+"use client";
+
 import { Box, List, ListItem, ListItemText, styled } from "@mui/material";
 import Image from "next/image";
 import InstagramIcon from '@mui/icons-material/Instagram';

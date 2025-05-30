@@ -13,11 +13,11 @@ export function middleware(request: NextRequest) {
   const publicPaths = ['/', '/api/autenticar', '/api/usuario'];
 
   // Se está na raiz e já está autenticado, redireciona para dashboard
-  // if (isRoot && isAuth) {
-  //   const url = request.nextUrl.clone();
-  //   url.pathname = '/dashboard';
-  //   return NextResponse.redirect(url);
-  // }
+  if (isRoot && isAuth) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/dashboard';
+    return NextResponse.redirect(url);
+  }
 
   // Se não está autenticado e tenta acessar uma rota que não é pública, redireciona para '/'
   if (!isAuth && !publicPaths.includes(pathname)) {
