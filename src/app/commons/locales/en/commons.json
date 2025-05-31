@@ -4,5 +4,22 @@
     "transactions": "Transactions",
     "investments": "Investments",
     "services": "Other Services"
+  },
+  "balanceCard": {
+    "balance": "Balance",
+    "account": "Account",
+    "greeting": "Hello, {{name}}! :)",
+    "guest": "Guest"
+  },
+  "newTransaction": {
+    "title": "New Transaction",
+    "typeDeposit": "Deposit",
+    "typeTransfer": "Transfer",
+    "errorSelectType": "Please select a transaction type.",
+    "errorInvalidValue": "Please enter a valid value greater than zero.",
+    "typeLabel": "Transaction Type",
+    "valueLabel": "Value",
+    "valuePlaceholder": "0.00",
+    "completeButton": "Complete Transaction"
   }
 }

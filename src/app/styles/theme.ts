@@ -1,6 +1,6 @@
 import { createTheme } from "@mui/material/styles";
 
-import { COLORS, TYPOGRAPHY, SPACING, SHAPE } from "./tokens";
+import { COLORS, SHAPE, SPACING, TYPOGRAPHY } from "./tokens";
 
 const theme = createTheme({
   palette: {
@@ -25,6 +25,7 @@ const theme = createTheme({
       disabled: COLORS.neutral[500],
     },
     action: {
+      active: COLORS.neutral[600],
       disabled: COLORS.neutral[300],
       hover: "#F0F0F0",
     },
@@ -66,6 +67,15 @@ const theme = createTheme({
           },
         },
       },
+    }
+  },
+  breakpoints: {
+    values: {
+      xs: 0,     // Mobile
+      sm: 720,   // Tablet pequeno
+      md: 960,   // Tablet grande / Desktop pequeno
+      lg: 1280,  // Desktop médio
+      xl: 1920,  // Desktop grande
     },
   },
 });
