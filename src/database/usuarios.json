@@ -18,5 +18,10 @@
     "nome": "Maza",
     "email": "maza@mail.com",
     "senha": "Maza"
+  },
+  {
+    "nome": "lucas",
+    "email": "lucas@lucas.com",
+    "senha": "123"
   }
 ]

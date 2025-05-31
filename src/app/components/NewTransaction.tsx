@@ -3,8 +3,8 @@
 import {
   Box,
   Button,
-  FormControl, 
-  InputLabel, 
+  FormControl,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -18,8 +18,10 @@ const TRANSACTION_TYPES = (t: any) => [
   { value: "DEPOSIT", label: t("newTransaction.typeDeposit") },
   { value: "TRANSFER", label: t("newTransaction.typeTransfer") },
 ];
+import { useUser } from "../contexts/UserContext";
 
 export default function NewTransaction() {
+  const { addTransaction } = useUser();
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -50,8 +52,16 @@ export default function NewTransaction() {
     }
     setError("");
 
-    const selectedType = TRANSACTION_TYPES(t).find((t) => t.value === type);
-    alert(`Tipo: ${selectedType?.label}, Valor: ${value}`);
+    const newTransaction = {
+      id: crypto.randomUUID(), // ou: Date.now().toString()
+      type: type as "DEPOSIT" | "TRANSFER",
+      value: parseFloat(value),
+      date: new Date().toISOString(),
+    };
+    addTransaction(newTransaction);
+
+    // const selectedType = TRANSACTION_TYPES(t).find((t) => t.value === type);
+    // alert(`Tipo: ${selectedType?.label}, Valor: ${value}`);
   };
 
   return (

@@ -13,13 +13,13 @@ import { ThemeProvider } from "@mui/material";
 
 import theme from "../styles/theme";
 import { UserProvider } from "../contexts/UserContext";
+import Statement from "../components/Statement";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <ThemeProvider theme={theme}>
       <UserProvider>
@@ -46,6 +46,7 @@ export default function DashboardLayout({
               <BalanceCard />
               <CardBackground>{children}</CardBackground>
             </Box>
+            <Statement/>
           </Box>
         </Box>
       </UserProvider>
