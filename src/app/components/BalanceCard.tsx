@@ -58,7 +58,7 @@ const BalanceCard = () => {
     >
       <Box>
         <Typography variant="h6" fontWeight="bold">
-          Olá, {user?.name || "Convidado"}! :)
+          {t("balanceCard.greeting", { name: user?.name || t("balanceCard.guest") })}
         </Typography>
         <Typography variant="body2" mt={3}>
           {now}

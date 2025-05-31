@@ -7,6 +7,19 @@
   },
   "balanceCard": {
     "balance": "Saldo",
-    "account": "Conta Corrente"
+    "account": "Conta Corrente",
+    "greeting": "Olá, {{name}}! :)",
+    "guest": "Convidado"
+  },
+  "newTransaction": {
+    "title": "Nova transação",
+    "typeDeposit": "Depósito",
+    "typeTransfer": "Transferência",
+    "errorSelectType": "Por favor, selecione o tipo de transação.",
+    "errorInvalidValue": "Por favor, insira um valor válido maior que zero.",
+    "typeLabel": "Tipo de transação",
+    "valueLabel": "Valor",
+    "valuePlaceholder": "0,00",
+    "completeButton": "Concluir transação"
   }
 }

@@ -12,87 +12,78 @@ import {
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
-
-const TRANSACTION_TYPES = [
-  { value: "DEPOSIT", label: "Depósito" },
-  { value: "TRANSFER", label: "Transferência" },
-  
+const TRANSACTION_TYPES = (t: any) => [
+  { value: "DEPOSIT", label: t("newTransaction.typeDeposit") },
+  { value: "TRANSFER", label: t("newTransaction.typeTransfer") },
 ];
 
 export default function NewTransaction() {
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
-  const [error, setError] = useState(""); 
+  const [error, setError] = useState("");
   const theme = useTheme();
+  const { t } = useTranslation();
 
-  
   const commonInputStyles = {
     backgroundColor: "#fff",
     border: `1px solid ${theme.palette.primary.main}`,
     borderRadius: "8px",
     "& .MuiInputBase-input": {
-      padding: "12px 8px", 
-      height: "24px", 
+      padding: "12px 8px",
+      height: "24px",
     },
     "& .MuiOutlinedInput-notchedOutline": {
-      
       border: "none",
     },
   };
 
-  
   const handleSubmit = () => {
-    
     if (!type) {
-      setError("Por favor, selecione o tipo de transação.");
+      setError(t("newTransaction.errorSelectType"));
       return;
     }
     if (!value || parseFloat(value) <= 0) {
-      setError("Por favor, insira um valor válido maior que zero.");
+      setError(t("newTransaction.errorInvalidValue"));
       return;
     }
-    setError(""); 
+    setError("");
 
-    
-    const selectedType = TRANSACTION_TYPES.find((t) => t.value === type);
+    const selectedType = TRANSACTION_TYPES(t).find((t) => t.value === type);
     alert(`Tipo: ${selectedType?.label}, Valor: ${value}`);
-
-    
-    
-    
   };
 
   return (
     <>
       <Typography variant="h4" fontWeight="bold" color="#dee9ea" mb={2}>
-        Nova transação
+        {t("newTransaction.title")}
       </Typography>
 
       <Box display="flex" flexDirection="column" gap={3}>
         <FormControl
           sx={{
-            width: { xs: "100%", sm: "355px" }, 
+            width: { xs: "100%", sm: "355px" },
             alignSelf: "flex-start",
           }}
         >
           <InputLabel
             id="transaction-type-label"
             sx={{
-              color: type ? theme.palette.primary.main : undefined, 
-              "&.Mui-focused": { color: theme.palette.primary.main }, 
+              color: type ? theme.palette.primary.main : undefined,
+              "&.Mui-focused": { color: theme.palette.primary.main },
             }}
           >
-            Tipo de transação
+            {t("newTransaction.typeLabel")}
           </InputLabel>
           <Select
             labelId="transaction-type-label"
             id="transaction-type-select"
             value={type}
-            label="Tipo de transação" 
+            label={t("newTransaction.typeLabel")}
             onChange={(e) => {
               setType(e.target.value);
-              if (error) setError(""); 
+              if (error) setError("");
             }}
             sx={{
               ...commonInputStyles,
@@ -100,7 +91,7 @@ export default function NewTransaction() {
               "& .MuiSelect-icon": { color: theme.palette.primary.main },
             }}
           >
-            {TRANSACTION_TYPES.map((transactionType) => (
+            {TRANSACTION_TYPES(t).map((transactionType) => (
               <MenuItem
                 key={transactionType.value}
                 value={transactionType.value}
@@ -113,29 +104,28 @@ export default function NewTransaction() {
 
         <Box>
           <Typography variant="body1" fontWeight={600} color="#dee9ea" mb={1}>
-            Valor
+            {t("newTransaction.valueLabel")}
           </Typography>
           <TextField
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
-              if (error) setError(""); 
+              if (error) setError("");
             }}
-            placeholder="0,00" 
-            type="number" 
+            placeholder={t("newTransaction.valuePlaceholder")}
+            type="number"
             InputProps={{
-              inputProps: { min: 0.01, step: 0.01 }, 
+              inputProps: { min: 0.01, step: 0.01 },
               style: {
-                height: 48, 
+                height: 48,
               },
             }}
             sx={{
               ...commonInputStyles,
-              zIndex: 1, 
-              width: { xs: "100%", sm: "250px" }, 
+              zIndex: 1,
+              width: { xs: "100%", sm: "250px" },
               "& .MuiInputBase-input": {
-                
-                ...commonInputStyles["& .MuiInputBase-input"], 
+                ...commonInputStyles["& .MuiInputBase-input"],
                 textAlign: "center",
               },
             }}
@@ -150,21 +140,21 @@ export default function NewTransaction() {
 
         <Button
           variant="contained"
-          onClick={handleSubmit} 
+          onClick={handleSubmit}
           sx={{
-            zIndex: 1, 
+            zIndex: 1,
             backgroundColor: theme.palette.primary.main,
             borderRadius: "8px",
             textTransform: "none",
             fontWeight: 600,
-            width: { xs: "100%", sm: "250px" }, 
+            width: { xs: "100%", sm: "250px" },
             height: "48px",
             "&:hover": {
-              backgroundColor: "#006B80", 
+              backgroundColor: "#006B80",
             },
           }}
         >
-          Concluir transação
+          {t("newTransaction.completeButton")}
         </Button>
       </Box>
     </>
