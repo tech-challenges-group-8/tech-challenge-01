@@ -2,11 +2,13 @@
 
 import { Box, Typography, Button, CssBaseline } from '@mui/material';
 import Link from 'next/link';
+import { ThemeProvider } from '@emotion/react';
+import Image from 'next/image';
+
 import HeaderHome from './components/home/HeaderHome';
 import FooterHome from './components/home/FooterHome';
-import { ThemeProvider } from '@emotion/react';
 import theme from './styles/theme';
-import Image from 'next/image';
+
 
 export default function NotFound() {
     return (

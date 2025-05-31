@@ -1,6 +1,7 @@
 "use client";
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
+
 import BodyHome from "./components/home/BodyHome";
 import FooterHome from "./components/home/FooterHome";
 import HeaderHome from "./components/home/HeaderHome";

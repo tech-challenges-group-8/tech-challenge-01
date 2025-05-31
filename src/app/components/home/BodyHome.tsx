@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import Image from "next/image";
+
 import ButtonsConta from "./ButtonsConta";
 
 export default function BodyHome() {

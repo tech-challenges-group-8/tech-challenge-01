@@ -1,12 +1,16 @@
 "use client";
 
+import Box from "@mui/material/Box";
+
 import BalanceCard from "@/app/components/BalanceCard";
 import CardBackground from "@/app/components/CardBackground";
-import Box from "@mui/material/Box";
+
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+
 import "../commons/i18n";
 import { ThemeProvider } from "@mui/material";
+
 import theme from "../styles/theme";
 
 export default function DashboardLayout({

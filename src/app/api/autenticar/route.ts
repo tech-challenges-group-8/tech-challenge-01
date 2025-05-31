@@ -1,7 +1,8 @@
-import { NextResponse } from 'next/server';
-import { cookies } from 'next/headers';
 import path from 'path';
 import { promises as fs } from 'fs';
+
+import { NextResponse } from 'next/server';
+import { cookies } from 'next/headers';
 
 
 const filePath = path.join(process.cwd(), 'src/database', 'usuarios.json');
