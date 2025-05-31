@@ -12,21 +12,23 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useUser } from "../contexts/UserContext";
+
 const BalanceCard = () => {
   const theme = useTheme();
   const { t } = useTranslation();
+  const { user } = useUser();
 
-  const [isVisible, setIsVisible] = useState(true); // State to track visibility
+  const [isVisible, setIsVisible] = useState(true);
 
   const handleToggleVisibility = () => {
-    setIsVisible((prev) => !prev); // Toggle visibility state
+    setIsVisible((prev) => !prev);
   };
 
-  const balance = 12345.67; // Example balance value
   const formattedBalance = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
-  }).format(balance);
+  }).format(user?.balance || 0);
 
   const locale = navigator.language;
   const now = capitalize(
@@ -56,7 +58,7 @@ const BalanceCard = () => {
     >
       <Box>
         <Typography variant="h6" fontWeight="bold">
-          Olá, John Doe! :)
+          Olá, {user?.name || "Convidado"}! :)
         </Typography>
         <Typography variant="body2" mt={3}>
           {now}

@@ -12,6 +12,7 @@ import "../commons/i18n";
 import { ThemeProvider } from "@mui/material";
 
 import theme from "../styles/theme";
+import { UserProvider } from "../contexts/UserContext";
 
 export default function DashboardLayout({
   children,
@@ -21,31 +22,33 @@ export default function DashboardLayout({
 
   return (
     <ThemeProvider theme={theme}>
-      <Box>
-        <Header />
-        <Box
-          sx={{
-            display: "flex",
-            height: "calc(100vh - 68px)",
-            backgroundColor: theme.palette.background.default,
-            padding: "16px",
-            gap: "16px",
-            justifyContent: "center",
-            alignItems: "flex-start",
-          }}
-        >
-          <Sidebar />
+      <UserProvider>
+        <Box>
+          <Header />
           <Box
             sx={{
-              display: "grid",
-              gridGap: "16px",
+              display: "flex",
+              height: "calc(100vh - 68px)",
+              backgroundColor: theme.palette.background.default,
+              padding: "16px",
+              gap: "16px",
+              justifyContent: "center",
+              alignItems: "flex-start",
             }}
           >
-            <BalanceCard />
-            <CardBackground>{children}</CardBackground>
+            <Sidebar />
+            <Box
+              sx={{
+                display: "grid",
+                gridGap: "16px",
+              }}
+            >
+              <BalanceCard />
+              <CardBackground>{children}</CardBackground>
+            </Box>
           </Box>
         </Box>
-      </Box>
+      </UserProvider>
     </ThemeProvider>
   );
 }
