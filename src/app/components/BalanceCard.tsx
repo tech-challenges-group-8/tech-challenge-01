@@ -9,11 +9,25 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
 const BalanceCard = () => {
   const theme = useTheme();
   const { t } = useTranslation();
+
+  const [isVisible, setIsVisible] = useState(true); // State to track visibility
+
+  const handleToggleVisibility = () => {
+    setIsVisible((prev) => !prev); // Toggle visibility state
+  };
+
+  const balance = 12345.67; // Example balance value
+  const formattedBalance = new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(balance);
+
   const locale = navigator.language;
   const now = capitalize(
     new Date().toLocaleDateString(locale, {
@@ -30,7 +44,7 @@ const BalanceCard = () => {
         borderRadius: 2,
         padding: 4,
         width: "690px",
-        height: "400px",
+        minHeight: "200px",
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.secondary.contrastText,
         display: "flex",
@@ -60,7 +74,7 @@ const BalanceCard = () => {
           <Typography variant="subtitle1" fontWeight="bold">
             {t("balanceCard.balance")}
           </Typography>
-          <IconButton sx={{ padding: 0 }}>
+          <IconButton sx={{ padding: 0 }} onClick={handleToggleVisibility}>
             <VisibilityIcon
               sx={{ fontSize: 18, color: theme.palette.primary.contrastText }}
             />
@@ -78,7 +92,7 @@ const BalanceCard = () => {
           {t("balanceCard.account")}
         </Typography>
         <Typography variant="h5" fontWeight="bold">
-          R$ 2.500,00
+          {isVisible ? formattedBalance : "******"}
         </Typography>
       </Box>
     </Box>

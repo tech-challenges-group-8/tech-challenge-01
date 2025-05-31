@@ -15,7 +15,7 @@ export const COLORS = {
     600: "#47A138", // Texto ativo
     500: "#6B7280", // Texto desativado/menu inativo
     300: "#D1D5DB", // Bordas/inativo
-    100: "#F5F5F5", // Fundo claro
+    100: "#e4ede3", // Fundo claro
     white: "#FFFFFF",
   },
 };
