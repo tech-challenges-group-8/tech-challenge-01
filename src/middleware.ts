@@ -10,7 +10,7 @@ export function middleware(request: NextRequest) {
   const isAuth = auth === 'true';
 
   // Rotas públicas (permitir acesso sem autenticação)
-  const publicPaths = ['/', '/api/autenticar', '/api/usuario'];
+  const publicPaths = ['/', '/api/auth', '/api/user'];
 
   // Se está na raiz e já está autenticado, redireciona para dashboard
   if (isRoot && isAuth) {

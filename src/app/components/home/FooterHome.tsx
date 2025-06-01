@@ -5,6 +5,7 @@ import Image from "next/image";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import { useTranslation } from "react-i18next";
 
 // ListItem customizado (opcional para controle de padding ou outros estilos)
 const CustomListItem = styled(ListItem)(({ theme }) => ({
@@ -12,6 +13,7 @@ const CustomListItem = styled(ListItem)(({ theme }) => ({
 }));
 
 export default function FooterHome() {
+    const { t } = useTranslation();
     return (
         <Box
             sx={{
@@ -33,7 +35,7 @@ export default function FooterHome() {
                 }}
             >
                 <List sx={{ width: '100%', maxWidth: 220 }}>
-                    {['Serviços', 'Conta corrente', 'Conta PJ', 'Cartão de crédito'].map((item, index) => (
+                    {[t('footerHome.servicesTitle'), t('footerHome.checkingAccount'), t('footerHome.businessAccount'), t('footerHome.creditCard')].map((item, index) => (
                         <CustomListItem key={item}>
                             <ListItemText
                                 primary={item}
@@ -46,7 +48,7 @@ export default function FooterHome() {
                     ))}
                 </List>
                 <List sx={{ width: '100%', maxWidth: 220 }}>
-                    {['Contato', '0800 004 250 08', 'meajuda@bytebank.com.br', 'ouvidoria@bytebank.com.br'].map((item, index) => (
+                    {[t('footerHome.contactTitle'), '0800 004 250 08', 'meajuda@bytebank.com.br', 'ouvidoria@bytebank.com.br'].map((item, index) => (
                         <CustomListItem key={item}>
                             <ListItemText
                                 primary={item}
@@ -61,7 +63,7 @@ export default function FooterHome() {
                 <List sx={{ width: '100%', maxWidth: 220, display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     <CustomListItem>
                         <ListItemText
-                            primary="Desenvolvido por Alura"
+                            primary={t('footerHome.developedBy')}
                             primaryTypographyProps={{
                                 fontSize: '16px',
                                 fontWeight: 700,

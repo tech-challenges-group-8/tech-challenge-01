@@ -1,40 +1,30 @@
-import path from 'path';
-import { promises as fs } from 'fs';
-
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
+import { readMockData } from "../../../utils/mockDatabase";
 
-const filePath = path.join(process.cwd(), 'src/database', 'usuarios.json');
+const fileName = "users.json";
 
-async function readUsers() {
-  try {
-    const data = await fs.readFile(filePath, 'utf8');
-    return JSON.parse(data);
-  } catch (error) {
-    return [];
-  }
-}
 
 export async function POST(request: Request) {
-  const { email, senha } = await request.json();
+  const { email, password } = await request.json();
 
-  if (!email || !senha) {
+  if (!email || !password) {
     return NextResponse.json(
-      { success: false, message: 'Email e senha são obrigatórios' },
+      { success: false, message: 'Email e password são obrigatórios' },
       { status: 400 }
     );
   }
 
-  const users = await readUsers();
+  const users = await readMockData(fileName);
 
   const user = users.find(
-    (u: any) => u.email === email && u.senha === senha
+    (u: any) => u.email === email && u.password === password
   );
 
   const cookieStore = await cookies();
 
-  if(!user.ativo){
+  if(!user.active){
     return NextResponse.json({ success: false, message: 'Conta inativa' }, { status: 401 });
   }
 

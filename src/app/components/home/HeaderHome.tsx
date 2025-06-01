@@ -2,11 +2,13 @@ import { Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } fro
 import Image from "next/image";
 import React from "react";
 import MenuIcon from '@mui/icons-material/Menu';
+import { useTranslation } from "react-i18next";
 
-import ButtonsConta from "./ButtonsConta";
+import ButtonsAccount from "./ButtonsAccount";
 
 export default function HeaderHome() {
     const [openMenu, setOpenMenu] = React.useState(false);
+    const { t } = useTranslation();
 
     const toggleDrawer = (newOpenMenu: boolean) => () => {
         setOpenMenu(newOpenMenu);
@@ -14,7 +16,7 @@ export default function HeaderHome() {
     const DrawerList = (
         <Box sx={{ width: 200 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
-                {['Sobre', 'Serviços'].map((text, index) => (
+                {[t('headerHome.about'), t('headerHome.services')].map((text, index) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemText primary={text} />
@@ -50,11 +52,11 @@ export default function HeaderHome() {
                             priority
                         />
                     </Box>
-                    <Box sx={{ fontSize: '16px', fontWeight: 'Semibold', color: '#47A138', cursor: 'pointer', display: { xs: 'none', sm: 'block', lg: 'block' } }}>Sobre</Box>
-                    <Box sx={{ fontSize: '16px', fontWeight: 'Semibold', color: '#47A138', cursor: 'pointer', display: { xs: 'none', sm: 'block', lg: 'block' } }}>Serviços</Box>
+                    <Box sx={{ fontSize: '16px', fontWeight: 'Semibold', color: '#47A138', cursor: 'pointer', display: { xs: 'none', sm: 'block', lg: 'block' } }}>{t('headerHome.about')}</Box>
+                    <Box sx={{ fontSize: '16px', fontWeight: 'Semibold', color: '#47A138', cursor: 'pointer', display: { xs: 'none', sm: 'block', lg: 'block' } }}>{t('headerHome.services')}</Box>
                 </Box>
                 <Box sx={{ display: { xs: 'none', sm: 'block', lg: 'block' } }}>
-                    <ButtonsConta />
+                    <ButtonsAccount />
                 </Box>
             </Box>
         </Box>

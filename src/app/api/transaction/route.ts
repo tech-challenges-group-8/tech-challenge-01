@@ -1,25 +1,9 @@
-import { promises as fs } from 'fs';
-import path from 'path';
-
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-const filePath = path.join(process.cwd(), 'src/database', 'transactions.json');
+import { readMockData, saveMockData } from "../../../utils/mockDatabase";
 
-// Função para ler os dados atuais
-async function readTransactions() {
-    try {
-        const data = await fs.readFile(filePath, 'utf8');
-        return JSON.parse(data);
-    } catch (error) {
-        return [];
-    }
-}
-
-// Função para salvar os dados
-async function saveTransactions(transactions: any) {
-    await fs.writeFile(filePath, JSON.stringify(transactions, null, 2));
-}
+const fileName = "transactions.json";
 
 // 📥 POST → adiciona uma transaction
 export async function POST(request: Request) {
@@ -39,7 +23,7 @@ export async function POST(request: Request) {
         );
     }
 
-    const users = await readTransactions();
+    const users = await readMockData(fileName);
 
     const cookieStore = await cookies();
     const userId = cookieStore.get('userId')?.value;
@@ -54,14 +38,14 @@ export async function POST(request: Request) {
     // Adiciona o novo usuário
     users.push({ id: Math.floor(Math.random() * 999999), tipo, valor, userId});
 
-    await saveTransactions(users);
+    await saveMockData(fileName, users);
 
     return NextResponse.json({ success: true, message: 'Transação adicionada com sucesso' });
 }
 
 // 📤 GET → lista
 export async function GET() {
-    const users = await readTransactions();
+    const users = await readMockData(fileName);
 
     const cookieStore = await cookies();
     const userId = cookieStore.get('userId')?.value;
