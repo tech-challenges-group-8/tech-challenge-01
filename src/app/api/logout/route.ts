@@ -11,5 +11,12 @@ export async function POST() {
     maxAge: 0,
   });
 
+  cookieStore.set({
+    name: 'userId',
+    value: '',
+    path: '/',
+    maxAge: 0,
+  });
+
   return NextResponse.json({ success: true });
 }
