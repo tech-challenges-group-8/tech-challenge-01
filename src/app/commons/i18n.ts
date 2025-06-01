@@ -5,16 +5,11 @@ import enTranslation from "./locales/en/commons.json";
 import ptTranslation from "./locales/pt/commons.json";
 
 const resources = {
-  en: {
-    translation: enTranslation,
-  },
-  pt: {
-    translation: ptTranslation,
-  },
+  en: { translation: enTranslation },
+  pt: { translation: ptTranslation },
 };
 
-// eslint-disable-next-line import/no-named-as-default-member
-i18next.use(initReactI18next).init({
+const initPromise = i18next.use(initReactI18next).init({
   resources,
   lng: "pt",
   fallbackLng: "pt",
@@ -24,3 +19,4 @@ i18next.use(initReactI18next).init({
 });
 
 export default i18next;
+export { initPromise };
