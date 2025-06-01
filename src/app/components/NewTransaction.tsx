@@ -39,7 +39,7 @@ export default function NewTransaction() {
     },
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (!type) {
       setError(t("newTransaction.errorSelectType"));
       return;
@@ -51,7 +51,26 @@ export default function NewTransaction() {
     setError("");
 
     const selectedType = TRANSACTION_TYPES(t).find((t) => t.value === type);
-    alert(`Tipo: ${selectedType?.label}, Valor: ${value}`);
+
+    const response = await fetch("/api/transaction", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        tipo: selectedType?.label,
+        valor: value
+      }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      //fazer algo quando dar certo
+    } else {
+      setError("Falha no cadastro: " + data.message);
+      return;
+    }
   };
 
   return (
