@@ -1,6 +1,7 @@
 "use client";
 
 import Box from "@mui/material/Box";
+import { Suspense } from "react";
 
 import BalanceCard from "@/app/components/BalanceCard";
 import CardBackground from "@/app/components/CardBackground";
@@ -22,33 +23,35 @@ export default function DashboardLayout({
 
   return (
     <ThemeProvider theme={theme}>
-      <UserProvider>
-        <Box>
-          <Header />
-          <Box
-            sx={{
-              display: "flex",
-              height: "calc(100vh - 68px)",
-              backgroundColor: theme.palette.background.default,
-              padding: "16px",
-              gap: "16px",
-              justifyContent: "center",
-              alignItems: "flex-start",
-            }}
-          >
-            <Sidebar />
+      <Suspense fallback={<div>Loading...</div>}>
+        <UserProvider>
+          <Box>
+            <Header />
             <Box
               sx={{
-                display: "grid",
-                gridGap: "16px",
+                display: "flex",
+                height: "calc(100vh - 68px)",
+                backgroundColor: theme.palette.background.default,
+                padding: "16px",
+                gap: "16px",
+                justifyContent: "center",
+                alignItems: "flex-start",
               }}
             >
-              <BalanceCard />
-              <CardBackground>{children}</CardBackground>
+              <Sidebar />
+              <Box
+                sx={{
+                  display: "grid",
+                  gridGap: "16px",
+                }}
+              >
+                <BalanceCard />
+                <CardBackground>{children}</CardBackground>
+              </Box>
             </Box>
           </Box>
-        </Box>
-      </UserProvider>
+        </UserProvider>
+      </Suspense>
     </ThemeProvider>
   );
 }
