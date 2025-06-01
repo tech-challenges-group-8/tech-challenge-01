@@ -40,8 +40,14 @@ export async function POST(request: Request) {
         return NextResponse.json({ success: false, message: 'Email ja cadastrado' }, { status: 400 });
     }
 
+    const ultimoId = (users.reduce(
+        (accumulator: any, currentValue: any) => currentValue.id > accumulator ? currentValue.id : accumulator,
+        0,
+    ) + 1);
+
+
     // Adiciona o novo usuário
-    users.push({ nome, email, senha });
+    users.push({ id: ultimoId, nome, email, senha, ativo: true });
 
     await saveUsers(users);
 
