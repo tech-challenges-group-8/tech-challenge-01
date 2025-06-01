@@ -34,7 +34,20 @@ export async function POST(request: Request) {
 
   const cookieStore = await cookies();
 
+  if(!user.ativo){
+    return NextResponse.json({ success: false, message: 'Conta inativa' }, { status: 401 });
+  }
+
   if (user) {
+    // Salva o ID em um cookie
+    cookieStore.set('userId', user.id, {
+      httpOnly: true, // Se quiser acessar no client, deixe false. (Para segurança, use true.)
+      secure: true,
+      sameSite: 'strict',
+      path: '/',
+      maxAge: 60 * 60 * 24, // 1 dia
+    });
+
     cookieStore.set('auth', 'true', {
       path: '/',
       maxAge: 60 * 60 * 24, // 1 dia
@@ -44,6 +57,13 @@ export async function POST(request: Request) {
 
   cookieStore.set({
     name: 'auth',
+    value: '',
+    path: '/',
+    maxAge: 0,
+  });
+
+  cookieStore.set({
+    name: 'userId',
     value: '',
     path: '/',
     maxAge: 0,
