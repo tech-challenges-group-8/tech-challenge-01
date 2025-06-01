@@ -14,13 +14,13 @@ import { ThemeProvider } from "@mui/material";
 
 import theme from "../styles/theme";
 import { UserProvider } from "../contexts/UserContext";
+import Statement from "../components/Statement";
 
 export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <ThemeProvider theme={theme}>
       <Suspense fallback={<div>Loading...</div>}>
@@ -49,6 +49,7 @@ export default function DashboardLayout({
                 <CardBackground>{children}</CardBackground>
               </Box>
             </Box>
+            <Statement/>
           </Box>
         </UserProvider>
       </Suspense>
