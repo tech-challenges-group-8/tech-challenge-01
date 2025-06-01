@@ -1,26 +1,26 @@
 [
   {
     "id": 487756,
-    "tipo": "Depósito",
-    "valor": "1",
+    "type": "Depósito",
+    "value": "1",
     "userId": "4"
   },
   {
     "id": 220417,
-    "tipo": "Depósito",
-    "valor": "2",
+    "type": "Depósito",
+    "value": "2",
     "userId": "a"
   },
   {
     "id": 893976,
-    "tipo": "Depósito",
-    "valor": "2",
+    "type": "Depósito",
+    "value": "2",
     "userId": "4"
   },
   {
     "id": 796316,
-    "tipo": "Depósito",
-    "valor": "12",
+    "type": "Depósito",
+    "value": "12",
     "userId": "44"
   }
 ]

@@ -58,8 +58,8 @@ export default function NewTransaction() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        tipo: selectedType?.label,
-        valor: value
+        type: selectedType?.label,
+        value: value
       }),
     });
 

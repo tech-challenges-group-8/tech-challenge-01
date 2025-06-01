@@ -7,19 +7,19 @@ const fileName = "transactions.json";
 
 // 📥 POST → adiciona uma transaction
 export async function POST(request: Request) {
-    const { tipo, valor } = await request.json();
+    const { type, value } = await request.json();
 
-    if (!tipo) {
+    if (!type) {
         return NextResponse.json(
-            { success: false, message: 'Tipo de transação é obrigatório' },
-            { status: 400 }
+          { success: false, message: "Tipo de transação é obrigatório" },
+          { status: 400 }
         );
     }
 
-    if (!valor) {
+    if (!value) {
         return NextResponse.json(
-            { success: false, message: 'Valor da transação é obrigatório' },
-            { status: 400 }
+          { success: false, message: "Valor da transação é obrigatório" },
+          { status: 400 }
         );
     }
 
@@ -36,7 +36,7 @@ export async function POST(request: Request) {
     }
 
     // Adiciona o novo usuário
-    users.push({ id: Math.floor(Math.random() * 999999), tipo, valor, userId});
+    users.push({ id: Math.floor(Math.random() * 999999), type, value, userId});
 
     await saveMockData(fileName, users);
 
