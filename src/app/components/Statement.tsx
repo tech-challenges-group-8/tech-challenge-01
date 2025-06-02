@@ -27,6 +27,7 @@ export default function Statement() {
 
   const [editingId, setEditingId] = useState<string | null>(null);
   const [editedValue, setEditedValue] = useState<string>("");
+  const [editError, setEditError] = useState<string>("");
   const [openModalId, setOpenModalId] = useState<string | null>(null);
 
   const handleOpenModal = (id: string) => setOpenModalId(id);
@@ -40,24 +41,27 @@ export default function Statement() {
   const startEditing = (tx: Transaction) => {
     setEditingId(tx.id);
     setEditedValue(tx.value.toString());
+    setEditError(""); // Clear any previous error when starting to edit
   };
 
   const handleValueChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setEditedValue(event.target.value);
+    if (editError) setEditError(""); // Clear error when user starts typing
   };
 
   const saveEdit = (tx: Transaction) => {
     const parsed = parseFloat(editedValue);
-    if (isNaN(parsed)) {
-      alert(t("statement.invalidValue"));
+    if (isNaN(parsed) || parsed <= 0) { // Added parsed <= 0 check for consistency
+      setEditError(t("statement.invalidValue"));
       return;
     }
 
     editTransaction({ ...tx, value: parsed });
     setEditingId(null);
     setEditedValue("");
+    setEditError(""); // Clear error on successful save
   };
 
   const uniqueTransactions = Array.from(
@@ -81,7 +85,7 @@ export default function Statement() {
         width: { xs: `calc(100% - ${theme.spacing(4)})`, lg: "400px" },
         height: {
           xs: "400px",
-          md: "100%",
+          md: `calc(100vh - 64px - ${theme.spacing(2)} * 2)`, // 100vh - Header height (approx 64px) - top/bottom padding of parent Box (16px * 2)
         },
         bgcolor: theme.palette.background.paper,
         borderRadius: theme.shape.borderRadius,
@@ -92,144 +96,182 @@ export default function Statement() {
       <Box
         sx={{
           p: 2,
+          height: "100%", // Ensure inner box takes full height of its parent
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         <Typography
           variant="h6"
           fontWeight="bold"
-          mb={2}
+          mb={theme.spacing(2)}
           color={theme.palette.primary.main}
         >
           {t("statement.title")}
         </Typography>
 
-        {Object.entries(groupedByMonth).map(([month, monthTransactions]) => (
-          <Box key={month} mb={2}>
-            <Typography
-              fontWeight="bold"
-              textTransform="capitalize"
-              color={theme.palette.primary.main}
-              mb={1}
-            >
-              {month}
-            </Typography>
+        <Box
+          sx={{
+            flexGrow: 1, // Allow this box to grow and take remaining space
+            overflowY: "scroll", // Always reserve space for scrollbar
+            "&::-webkit-scrollbar": {
+              width: "2px",
+            },
+            "&::-webkit-scrollbar-thumb": {
+              backgroundColor: "transparent", // Hide thumb by default
+              borderRadius: "4px",
+            },
+            "&::-webkit-scrollbar-track": {
+              backgroundColor: "transparent", // Hide track by default
+            },
+            "&:hover::-webkit-scrollbar-thumb": {
+              backgroundColor: theme.palette.primary.main, // Show thumb on hover
+            },
+            "&:hover::-webkit-scrollbar-track": {
+              backgroundColor: theme.palette.background.default, // Show track on hover
+            },
+          }}
+        >
+          {Object.entries(groupedByMonth).map(([month, monthTransactions]) => (
+            <Box key={month} mb={theme.spacing(2)}>
+              <Typography
+                fontWeight="bold"
+                textTransform="capitalize"
+                color={theme.palette.primary.main}
+                mb={theme.spacing(1)}
+              >
+                {month}
+              </Typography>
 
-            {monthTransactions.map((tx) => (
-              <Box key={tx.id} mb={2}>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                >
-                  <Box>
-                    <Typography
-                      variant="body2"
-                      color={theme.palette.primary.main}
-                    >
-                      {tx.type === "TRANSFER"
-                        ? t("statement.transfer")
-                        : t("statement.deposit")}
-                    </Typography>
-
-                    {editingId === tx.id ? (
-                      <Box display="flex" alignItems="center" gap={1}>
-                        <NumericInputField
-                          value={editedValue}
-                          onChange={handleValueChange}
-                          sx={{
-                            zIndex: 1,
-                            width: { xs: "100%", sm: "250px" },
-                            "& .MuiInputBase-input": {
-                              textAlign: "center",
-                            },
-                          }}
-                        />
-                        <Button
-                          variant="outlined"
-                          size="small"
-                          onClick={() => saveEdit(tx)}
-                        >
-                          {t("statement.ok")}
-                        </Button>
-                      </Box>
-                    ) : (
+              {monthTransactions.map((tx) => (
+                <Box key={tx.id} mb={theme.spacing(2)}>
+                  <Box
+                    display="flex"
+                    justifyContent="space-between"
+                    alignItems="center"
+                  >
+                    <Box>
                       <Typography
-                        fontWeight={600}
-                        color={
-                          tx.type === "TRANSFER"
-                            ? theme.palette.error.main
-                            : theme.palette.success.main
-                        }
+                        variant="body2"
+                        color={theme.palette.primary.main}
                       >
                         {tx.type === "TRANSFER"
-                          ? `-R$ ${Number(tx.value).toFixed(2)}`
-                          : `R$ ${Number(tx.value).toFixed(2)}`}
+                          ? t("statement.transfer")
+                          : t("statement.deposit")}
                       </Typography>
-                    )}
 
-                    <Typography
-                      variant="caption"
-                      color={theme.palette.text.secondary}
-                    >
-                      {new Date(tx.date).toLocaleDateString("pt-BR")}
-                    </Typography>
-                  </Box>
+                      {editingId === tx.id ? (
+                        <Box
+                          display="flex"
+                          alignItems="center"
+                          gap={theme.spacing(1)}
+                        >
+                          <NumericInputField
+                            value={editedValue}
+                            onChange={handleValueChange}
+                            sx={{
+                              zIndex: 1,
+                              width: { xs: "100%", sm: "150px" },
+                              "& .MuiInputBase-input": {
+                                textAlign: "center",
+                              },
+                            }}
+                            error={!!editError}
+                            helperText={editError}
+                          />
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={() => saveEdit(tx)}
+                          >
+                            {t("statement.ok")}
+                          </Button>
+                        </Box>
+                      ) : (
+                        <Typography
+                          fontWeight={600}
+                          color={
+                            tx.type === "TRANSFER"
+                              ? theme.palette.error.main
+                              : theme.palette.success.main
+                          }
+                        >
+                          {tx.type === "TRANSFER"
+                            ? `-R$ ${Number(tx.value).toFixed(2)}`
+                            : `R$ ${Number(tx.value).toFixed(2)}`}
+                        </Typography>
+                      )}
 
-                  <Box>
-                    <IconButton onClick={() => startEditing(tx)}>
-                      <EditIcon
-                        sx={{ fontSize: 18, color: theme.palette.primary.main }}
-                      />
-                    </IconButton>
-                    <IconButton onClick={() => handleOpenModal(tx.id)}>
-                      <DeleteIcon
-                        sx={{ fontSize: 18, color: theme.palette.primary.main }}
-                      />
-                    </IconButton>
-                  </Box>
-                </Box>
-                <Divider sx={{ mt: theme.spacing(1) }} />
-
-                <Modal
-                  open={openModalId === tx.id}
-                  onClose={handleCloseModal}
-                  closeAfterTransition
-                  BackdropComponent={Backdrop}
-                  BackdropProps={{ timeout: 300 }}
-                >
-                  <Fade in={openModalId === tx.id}>
-                    <Box
-                      sx={{
-                        position: "absolute",
-                        top: "50%",
-                        left: "50%",
-                        transform: "translate(-50%, -50%)",
-                        bgcolor: theme.palette.background.paper,
-                        color: theme.palette.text.primary,
-                        boxShadow: 24,
-                        p: theme.spacing(4),
-                        borderRadius: theme.shape.borderRadius,
-                        width: 300,
-                      }}
-                    >
-                      <Typography variant="body1" mb={theme.spacing(2)}>
-                        {t("statement.confirmDelete")}
-                      </Typography>
-                      <Button
-                        variant="contained"
-                        color="error"
-                        fullWidth
-                        onClick={() => handleDelete(tx.id)}
+                      <Typography
+                        variant="caption"
+                        color={theme.palette.text.secondary}
                       >
-                        {t("statement.deleteTransaction")}
-                      </Button>
+                        {new Date(tx.date).toLocaleDateString("pt-BR")}
+                      </Typography>
                     </Box>
-                  </Fade>
-                </Modal>
-              </Box>
-            ))}
-          </Box>
-        ))}
+
+                    <Box>
+                      <IconButton onClick={() => startEditing(tx)}>
+                        <EditIcon
+                          sx={{
+                            fontSize: 18,
+                            color: theme.palette.primary.main,
+                          }}
+                        />
+                      </IconButton>
+                      <IconButton onClick={() => handleOpenModal(tx.id)}>
+                        <DeleteIcon
+                          sx={{
+                            fontSize: 18,
+                            color: theme.palette.primary.main,
+                          }}
+                        />
+                      </IconButton>
+                    </Box>
+                  </Box>
+                  <Divider sx={{ mt: theme.spacing(1) }} />
+
+                  <Modal
+                    open={openModalId === tx.id}
+                    onClose={handleCloseModal}
+                    closeAfterTransition
+                    BackdropComponent={Backdrop}
+                    BackdropProps={{ timeout: 300 }}
+                  >
+                    <Fade in={openModalId === tx.id}>
+                      <Box
+                        sx={{
+                          position: "absolute",
+                          top: "50%",
+                          left: "50%",
+                          transform: "translate(-50%, -50%)",
+                          bgcolor: theme.palette.background.paper,
+                          color: theme.palette.text.primary,
+                          boxShadow: 24,
+                          p: theme.spacing(4),
+                          borderRadius: theme.shape.borderRadius,
+                          width: 300,
+                        }}
+                      >
+                        <Typography variant="body1" mb={theme.spacing(2)}>
+                          {t("statement.confirmDelete")}
+                        </Typography>
+                        <Button
+                          variant="contained"
+                          color="error"
+                          fullWidth
+                          onClick={() => handleDelete(tx.id)}
+                        >
+                          {t("statement.deleteTransaction")}
+                        </Button>
+                      </Box>
+                    </Fade>
+                  </Modal>
+                </Box>
+              ))}
+            </Box>
+          ))}
+        </Box>
       </Box>
     </Box>
   );

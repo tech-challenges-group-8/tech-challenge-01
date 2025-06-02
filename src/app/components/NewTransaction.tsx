@@ -113,6 +113,7 @@ export default function NewTransaction() {
             sx={{
               ...commonInputStyles,
               height: "48px",
+              width: { xs: "100%", sm: "400px" },
               "& .MuiSelect-icon": { color: theme.palette.primary.main },
             }}
           >
@@ -140,13 +141,12 @@ export default function NewTransaction() {
             placeholder={t("newTransaction.valuePlaceholder")}
             sx={{
               zIndex: 1,
-              width: { xs: "100%", sm: "250px" },
+              width: { xs: "100%", sm: "400px" },
               "& .MuiInputBase-input": {
                 textAlign: "center",
               },
             }}
             error={!!error}
-            helperText={error}
           />
         </Box>
 
