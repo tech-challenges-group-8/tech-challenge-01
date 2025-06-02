@@ -1,14 +1,14 @@
 "use client";
 
-import { Box, List, ListItem, ListItemText, styled } from "@mui/material";
-import Image from "next/image";
 import InstagramIcon from '@mui/icons-material/Instagram';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import YouTubeIcon from '@mui/icons-material/YouTube';
+import { Box, List, ListItem, ListItemText, styled } from "@mui/material";
+import Image from "next/image";
 import { useTranslation } from "react-i18next";
 
 // ListItem customizado (opcional para controle de padding ou outros estilos)
-const CustomListItem = styled(ListItem)(({ theme }) => ({
+const CustomListItem = styled(ListItem)(() => ({
     padding: '2px 0',
 }));
 

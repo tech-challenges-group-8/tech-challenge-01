@@ -30,6 +30,8 @@ export async function POST(request: Request) {
     email,
     password,
     active: true,
+    balance: 0,
+    
   };
 
   users.push(newUser);

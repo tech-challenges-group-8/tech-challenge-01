@@ -3,7 +3,6 @@
 import {
   Box,
   Paper,
-  useTheme
 } from "@mui/material";
 
 export default function CardBackground({
@@ -11,8 +10,6 @@ export default function CardBackground({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const theme = useTheme();
-
   return (
     <Paper
       elevation={3}

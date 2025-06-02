@@ -3,8 +3,8 @@
 import {
   Box,
   Button,
-  FormControl, 
-  InputLabel, 
+  FormControl,
+  InputLabel,
   MenuItem,
   Select,
   TextField,
@@ -14,15 +14,19 @@ import {
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { useUser } from "../contexts/UserContext";
+
 const TRANSACTION_TYPES = (t: any) => [
   { value: "DEPOSIT", label: t("newTransaction.typeDeposit") },
   { value: "TRANSFER", label: t("newTransaction.typeTransfer") },
 ];
 
 export default function NewTransaction() {
+  const { addTransaction } = useUser();
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const theme = useTheme();
   const { t } = useTranslation();
 
@@ -40,36 +44,38 @@ export default function NewTransaction() {
   };
 
   const handleSubmit = async () => {
+    if (isSubmitting) return;
+
     if (!type) {
       setError(t("newTransaction.errorSelectType"));
       return;
     }
-    if (!value || parseFloat(value) <= 0) {
+
+    const parsedValue = parseFloat(value);
+    if (!value || isNaN(parsedValue) || parsedValue <= 0) {
       setError(t("newTransaction.errorInvalidValue"));
       return;
     }
+
+    setIsSubmitting(true);
     setError("");
 
-    const selectedType = TRANSACTION_TYPES(t).find((t) => t.value === type);
+    const newTransaction = {
+      id: crypto.randomUUID(), // ou deixe o backend gerar
+      type: type as "DEPOSIT" | "TRANSFER",
+      value: parsedValue,
+      date: new Date().toISOString(),
+    };
 
-    const response = await fetch("/api/transaction", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        type: selectedType?.label,
-        value: value
-      }),
-    });
-
-    const data = await response.json();
-
-    if (response.ok && data.success) {
-      //fazer algo quando dar certo
-    } else {
-      setError("Falha no cadastro: " + data.message);
-      return;
+    try {
+      await addTransaction(newTransaction);
+      setType("");
+      setValue("");
+    } catch (err) {
+      console.error("Erro ao adicionar transação:", err);
+      setError("Erro ao adicionar transação.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -160,6 +166,7 @@ export default function NewTransaction() {
         <Button
           variant="contained"
           onClick={handleSubmit}
+          disabled={isSubmitting}
           sx={{
             zIndex: 1,
             backgroundColor: theme.palette.primary.main,
@@ -173,7 +180,9 @@ export default function NewTransaction() {
             },
           }}
         >
-          {t("newTransaction.completeButton")}
+          {isSubmitting
+            ? t("newTransaction.loadingButton")
+            : t("newTransaction.completeButton")}
         </Button>
       </Box>
     </>

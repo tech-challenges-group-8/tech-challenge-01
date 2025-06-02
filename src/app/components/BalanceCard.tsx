@@ -24,7 +24,6 @@ const BalanceCard = () => {
   const handleToggleVisibility = () => {
     setIsVisible((prev) => !prev);
   };
-
   const formattedBalance = new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",

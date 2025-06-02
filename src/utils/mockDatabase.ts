@@ -6,7 +6,7 @@ export async function readMockData(fileName: string) {
   try {
     const data = await fs.readFile(filePath, "utf8");
     return JSON.parse(data);
-  } catch (error) {
+  } catch {
     return [];
   }
 }

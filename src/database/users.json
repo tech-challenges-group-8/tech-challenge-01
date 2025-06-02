@@ -4,41 +4,71 @@
     "name": "Teste",
     "email": "asdadas",
     "password": "123",
-    "active": true
+    "active": true,
+    "balance": 0
   },
   {
     "id": 2,
     "name": "Fernando",
     "email": "email@gmail.com",
     "password": "123",
-    "active": true
+    "active": true,
+    "balance": 0
   },
   {
     "id": 4,
     "name": "Fernando",
     "email": "fernando@grupo8.com",
     "password": "123",
-    "active": true
+    "active": true,
+    "balance": 0
   },
   {
     "id": 3,
     "name": "Maza",
     "email": "maza@mail.com",
     "password": "Maza",
-    "active": true
+    "active": true,
+    "balance": 0
   },
   {
     "id": 5,
     "name": "teste",
     "email": "teste@teste",
     "password": "123",
-    "active": false
+    "active": false,
+    "balance": 0
   },
   {
     "id": 6,
     "name": "Vittoria",
     "email": "vittoriazago11@gmail.com",
     "password": "123",
-    "active": true
+    "active": true,
+    "balance": 5000
+  },
+  {
+    "id": 7,
+    "name": "Lucas",
+    "email": "lucas@teste.com",
+    "password": "123",
+    "active": true,
+    "balance": 2000
+  },
+  {
+    "id": 8,
+    "name": "Luucas",
+    "email": "lucas@teste2.com",
+    "password": "123",
+    "active": true,
+    "balance": 900
+  },
+  {
+    "id": 9,
+    "name": "TesteNewUser",
+    "email": "teste@user.com",
+    "password": "123",
+    "active": true,
+    "balance": 0
   }
 ]

@@ -1,7 +1,7 @@
+import MenuIcon from '@mui/icons-material/Menu';
 import { Box, Button, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
 import Image from "next/image";
 import React from "react";
-import MenuIcon from '@mui/icons-material/Menu';
 import { useTranslation } from "react-i18next";
 
 import ButtonsAccount from "./ButtonsAccount";
@@ -16,7 +16,7 @@ export default function HeaderHome() {
     const DrawerList = (
         <Box sx={{ width: 200 }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
-                {[t('headerHome.about'), t('headerHome.services')].map((text, index) => (
+                {[t('headerHome.about'), t('headerHome.services')].map((text) => (
                     <ListItem key={text} disablePadding>
                         <ListItemButton>
                             <ListItemText primary={text} />
