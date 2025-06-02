@@ -1,12 +1,12 @@
 "use client";
 
-import { Box, Typography, Button, CssBaseline } from '@mui/material';
-import Link from 'next/link';
 import { ThemeProvider } from '@emotion/react';
+import { Box, Typography, Button, CssBaseline } from '@mui/material';
 import Image from 'next/image';
+import Link from 'next/link';
 
-import HeaderHome from './components/home/HeaderHome';
 import FooterHome from './components/home/FooterHome';
+import HeaderHome from './components/home/HeaderHome';
 import theme from './styles/theme';
 
 

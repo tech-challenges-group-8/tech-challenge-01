@@ -1,5 +1,6 @@
 "use client";
 
+import Cookies from "js-cookie";
 import React, {
   createContext,
   useContext,
@@ -7,7 +8,6 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
-import Cookies from "js-cookie";
 
 interface User {
   id: string;

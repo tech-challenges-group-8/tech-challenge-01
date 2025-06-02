@@ -1,5 +1,6 @@
 "use client";
 
+import { ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
 import { Suspense } from "react";
 
@@ -8,13 +9,10 @@ import CardBackground from "@/app/components/CardBackground";
 
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
-
 import "../commons/i18n";
-import { ThemeProvider } from "@mui/material";
-
-import theme from "../styles/theme";
-import { UserProvider } from "../contexts/UserContext";
 import Statement from "../components/Statement";
+import { UserProvider } from "../contexts/UserContext";
+import theme from "../styles/theme";
 
 export default function DashboardLayout({
   children,

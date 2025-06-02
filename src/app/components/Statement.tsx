@@ -1,5 +1,7 @@
 "use client";
 
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
 import {
   Box,
   Typography,
@@ -7,8 +9,7 @@ import {
   Divider,
   useTheme,
 } from "@mui/material";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
+
 import type { Transaction } from "../contexts/UserContext";
 import { useUser } from "../contexts/UserContext";
 
