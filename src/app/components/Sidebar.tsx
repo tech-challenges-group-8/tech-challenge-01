@@ -73,7 +73,8 @@ const Sidebar = () => {
         boxShadow: 2,
         justifyContent: { sm: "space-around", lg: "flex-start" },
         alignItems: "center",
-        padding: { sm: theme.spacing(1), lg: 0 },
+        paddingX: { xs: 1, md: 2 },
+        paddingY: { xs: 0.5, md: 1 },
       }}
     >
       <List

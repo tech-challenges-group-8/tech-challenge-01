@@ -15,11 +15,13 @@ import {
   Backdrop,
 } from "@mui/material";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 import type { Transaction } from "../contexts/UserContext";
 import { useUser } from "../contexts/UserContext";
 
 export default function Statement() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const { transactions, deleteTransaction, editTransaction } = useUser();
 
@@ -49,7 +51,7 @@ export default function Statement() {
   const saveEdit = (tx: Transaction) => {
     const parsed = parseFloat(editedValue);
     if (isNaN(parsed)) {
-      alert("Valor inválido");
+      alert(t("statement.invalidValue"));
       return;
     }
 
@@ -76,7 +78,7 @@ export default function Statement() {
   return (
     <Box
       sx={{
-        width: { xs: `calc(100% - ${theme.spacing(4)})`, md: "400px" },
+        width: { xs: `calc(100% - ${theme.spacing(4)})`, lg: "400px" },
         height: {
           xs: "400px",
           md: "100%",
@@ -102,7 +104,7 @@ export default function Statement() {
           mb={2}
           color={theme.palette.primary.main}
         >
-          Extrato
+          {t("statement.title")}
         </Typography>
 
         {Object.entries(groupedByMonth).map(([month, monthTransactions]) => (
@@ -128,7 +130,9 @@ export default function Statement() {
                       variant="body2"
                       color={theme.palette.primary.main}
                     >
-                      {tx.type === "TRANSFER" ? "Transferência" : "Depósito"}
+                      {tx.type === "TRANSFER"
+                        ? t("statement.transfer")
+                        : t("statement.deposit")}
                     </Typography>
 
                     {editingId === tx.id ? (
@@ -144,7 +148,7 @@ export default function Statement() {
                           size="small"
                           onClick={() => saveEdit(tx)}
                         >
-                          OK
+                          {t("statement.ok")}
                         </Button>
                       </Box>
                     ) : (
@@ -200,7 +204,7 @@ export default function Statement() {
                       }}
                     >
                       <Typography variant="body1" mb={2}>
-                        Tem certeza que deseja excluir esta transação?
+                        {t("statement.confirmDelete")}
                       </Typography>
                       <Button
                         variant="contained"
@@ -208,7 +212,7 @@ export default function Statement() {
                         fullWidth
                         onClick={() => handleDelete(tx.id)}
                       >
-                        Deletar transação
+                        {t("statement.deleteTransaction")}
                       </Button>
                     </Box>
                   </Fade>

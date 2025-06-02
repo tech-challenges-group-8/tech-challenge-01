@@ -1,11 +1,11 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Box, Avatar, useTheme, IconButton, Menu, MenuItem } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
+import { AppBar, Toolbar, Typography, Box, Avatar, useTheme, IconButton, Menu, MenuItem } from '@mui/material';
+import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import Link from "next/link";
 
 import { useUser } from "../contexts/UserContext";
 
