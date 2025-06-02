@@ -8,7 +8,6 @@ import React, {
   useEffect,
 } from "react";
 import Cookies from "js-cookie";
-import { v4 as uuidv4 } from "uuid"; // instale com `npm i uuid`
 
 interface User {
   id: string;
@@ -18,106 +17,194 @@ interface User {
   active: boolean;
 }
 
-interface UserContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
-  transactions: Transaction[];
-  addTransaction: (tx: Transaction) => void;
-  deleteTransaction: (id: string) => void;
-  editTransaction: (id: Transaction) => void;
-}
-
 export type Transaction = {
   id: string;
   type: "DEPOSIT" | "TRANSFER";
   value: number;
   date: string;
 };
+
+interface UserContextType {
+  user: User | null;
+  setUser: (user: User | null) => void;
+  transactions: Transaction[];
+  addTransaction: (tx: Transaction) => void;
+  deleteTransaction: (id: string) => void;
+  editTransaction: (tx: Transaction) => void;
+}
+
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  console.log(user);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const addTransaction = (tx: Transaction) => {
-    const txWithId = { ...tx, id: uuidv4() }; // adiciona ID único
-    setTransactions((prev) => [txWithId, ...prev]);
 
-    setUser((prevUser) => {
-      if (!prevUser) return prevUser;
-      let newBalance =
-        tx.type === "DEPOSIT"
-          ? prevUser.balance + tx.value
-          : prevUser.balance - tx.value;
-      return { ...prevUser, balance: newBalance };
-    });
+  const normalizeUser = (u: any): User => ({
+    ...u,
+    id: String(u.id),
+    balance: u.balance != null ? Number(u.balance) : 0,
+  });
+
+  const addTransaction = async (tx: Transaction) => {
+    try {
+      const response = await fetch("/api/transaction", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(tx),
+      });
+
+      const data = await response.json();
+      if (!response.ok || !data.success) {
+        console.error("Erro ao adicionar transação:", data.message);
+        return;
+      }
+
+      const savedTx = data.transaction;
+
+      // ✅ Atualiza apenas o saldo (as transações serão recarregadas pelo useEffect)
+      setUser((prevUser) => {
+        if (!prevUser) return prevUser;
+        const newBalance =
+          savedTx.type === "DEPOSIT"
+            ? prevUser.balance + savedTx.value
+            : prevUser.balance - savedTx.value;
+        return { ...prevUser, balance: newBalance };
+      });
+    } catch (err) {
+      console.error("Erro ao adicionar transação:", err);
+    }
   };
 
-  const deleteTransaction = (id: string) => {
+  const deleteTransaction = async (id: string) => {
     const txToDelete = transactions.find((t) => t.id === id);
     if (!txToDelete) return;
 
-    // Atualiza saldo
-    setUser((prevUser) => {
-      if (!prevUser) return prevUser;
-      const updatedBalance =
-        txToDelete.type === "DEPOSIT"
-          ? prevUser.balance - txToDelete.value
-          : prevUser.balance + txToDelete.value;
-      return { ...prevUser, balance: updatedBalance };
-    });
+    try {
+      const response = await fetch(`/api/transaction/${id}`, {
+        method: "DELETE",
+      });
 
-    // Remove transação
-    setTransactions((prev) => prev.filter((t) => t.id !== id));
+      if (!response.ok) {
+        console.error("Erro ao excluir transação");
+        return;
+      }
+
+      setUser((prevUser) => {
+        if (!prevUser) return prevUser;
+        const updatedBalance =
+          txToDelete.type === "DEPOSIT"
+            ? prevUser.balance - txToDelete.value
+            : prevUser.balance + txToDelete.value;
+        return { ...prevUser, balance: updatedBalance };
+      });
+
+      setTransactions((prev) => prev.filter((t) => t.id !== id));
+    } catch (error) {
+      console.error("Erro ao excluir transação:", error);
+    }
   };
 
-  const editTransaction = (updatedTx: Transaction) => {
+  function calculateNewBalance(
+    user: User,
+    oldTx?: Transaction,
+    newTx?: Transaction
+  ): number {
+    let balance = user.balance;
+
+    if (oldTx) {
+      balance += oldTx.type === "DEPOSIT" ? -oldTx.value : oldTx.value;
+    }
+
+    if (newTx) {
+      balance += newTx.type === "DEPOSIT" ? newTx.value : -newTx.value;
+    }
+
+    return balance;
+  }
+
+  const editTransaction = async (updatedTx: Transaction) => {
     const oldTx = transactions.find((t) => t.id === updatedTx.id);
     if (!oldTx) return;
 
-    // Atualiza saldo
-    setUser((prevUser) => {
-      if (!prevUser) return prevUser;
-      let balance = prevUser.balance;
+    try {
+      const response = await fetch(`/api/transaction/${updatedTx.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updatedTx),
+      });
 
-      if (oldTx.type === "DEPOSIT") balance -= oldTx.value;
-      if (oldTx.type === "TRANSFER") balance += oldTx.value;
+      if (!response.ok) {
+        console.error("Erro ao editar transação");
+        return;
+      }
 
-      if (updatedTx.type === "DEPOSIT") balance += updatedTx.value;
-      if (updatedTx.type === "TRANSFER") balance -= updatedTx.value;
+      setUser((prevUser) =>
+        prevUser
+          ? {
+              ...prevUser,
+              balance: calculateNewBalance(prevUser, oldTx, updatedTx),
+            }
+          : prevUser
+      );
 
-      return { ...prevUser, balance };
-    });
-
-    // Atualiza transação
-    setTransactions((prev) =>
-      prev.map((t) => (t.id === updatedTx.id ? updatedTx : t))
-    );
+      setTransactions((prev) =>
+        prev.map((t) => (t.id === updatedTx.id ? updatedTx : t))
+      );
+    } catch (error) {
+      console.error("Erro ao editar transação:", error);
+    }
   };
 
   useEffect(() => {
     const loadUserFromCookies = async () => {
-        try {
-          const response = await fetch(`/api/user-session`);
-          const data = await response.json();
-          if (response.ok && data.success) {
-            setUser(data.user);
-          } else {
-            console.error("Failed to fetch user data:", data.message);
-            setUser(null);
-            Cookies.remove("userId");
-            Cookies.remove("auth");
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+      try {
+        const response = await fetch(`/api/user-session`);
+        const data = await response.json();
+
+        if (response.ok && data.success && data.user) {
+          setUser(normalizeUser(data.user));
+        } else {
+          console.error("Falha ao buscar usuário:", data.message);
           setUser(null);
           Cookies.remove("userId");
           Cookies.remove("auth");
         }
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        setUser(null);
+        Cookies.remove("userId");
+        Cookies.remove("auth");
+      }
     };
 
     loadUserFromCookies();
   }, []);
+
+  useEffect(() => {
+    const loadTransactions = async () => {
+      if (!user?.id) return;
+
+      try {
+        const response = await fetch(`/api/transaction?userId=${user.id}`);
+        const data = await response.json();
+
+        if (response.ok && data.success && Array.isArray(data.transactions)) {
+          setTransactions(data.transactions);
+        } else {
+          console.error(
+            "Erro ao carregar transações:",
+            data.message || "Resposta inesperada"
+          );
+        }
+      } catch (error) {
+        console.error("Erro de rede ao carregar transações:", error);
+      }
+    };
+
+    loadTransactions();
+  }, [user]);
 
   return (
     <UserContext.Provider

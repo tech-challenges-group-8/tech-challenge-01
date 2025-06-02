@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 
-import { readMockData } from '../../../utils/mockDatabase';
+import { readMockData, saveMockData } from '../../../utils/mockDatabase';
 
 const fileName = "users.json";
 
@@ -18,6 +18,11 @@ export async function GET() {
   const user = users.find((u: any) => String(u.id) === userId);
 
   if (user) {
+    if (user.balance == null) {
+      user.balance = 0;
+      await saveMockData(fileName, users); // atualiza o JSON com balance: 0
+    }
+
     const { password, ...userData } = user; // Exclude sensitive data
     return NextResponse.json({ success: true, user: userData });
   } else {

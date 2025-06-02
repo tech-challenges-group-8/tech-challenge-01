@@ -1,11 +1,17 @@
-// Statement.tsx
 "use client";
 
-import { Box, Typography, IconButton, Divider, useTheme } from "@mui/material";
+import {
+  Box,
+  Typography,
+  IconButton,
+  Divider,
+  useTheme,
+} from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import type { Transaction } from "../contexts/UserContext";
 import { useUser } from "../contexts/UserContext";
+
 export default function Statement() {
   const theme = useTheme();
   const { transactions, deleteTransaction, editTransaction } = useUser();
@@ -28,17 +34,21 @@ export default function Statement() {
     });
   };
 
-  const groupedByMonth = transactions.reduce<Record<string, Transaction[]>>(
-    (acc, transaction) => {
-      const monthLabel = new Date(transaction.date).toLocaleString("default", {
-        month: "long",
-      });
-      if (!acc[monthLabel]) acc[monthLabel] = [];
-      acc[monthLabel].push(transaction);
-      return acc;
-    },
-    {}
+  // Remove transações duplicadas por ID
+  const uniqueTransactions = Array.from(
+    new Map(transactions.map((t) => [t.id, t])).values()
   );
+
+  const groupedByMonth = uniqueTransactions.reduce<
+    Record<string, Transaction[]>
+  >((acc, transaction) => {
+    const monthLabel = new Date(transaction.date).toLocaleString("default", {
+      month: "long",
+    });
+    if (!acc[monthLabel]) acc[monthLabel] = [];
+    acc[monthLabel].push(transaction);
+    return acc;
+  }, {});
 
   return (
     <Box
@@ -51,7 +61,7 @@ export default function Statement() {
         overflowY: "auto",
       }}
     >
-      <Typography variant="h6" fontWeight="bold" mb={2}>
+      <Typography variant="h6" fontWeight="bold" mb={2} color={theme.palette.primary.main}>
         Extrato
       </Typography>
 
@@ -83,12 +93,14 @@ export default function Statement() {
                   <Typography
                     fontWeight={600}
                     color={
-                      tx.type === "TRANSFER" ? "error.main" : "success.main"
+                      tx.type === "TRANSFER"
+                        ? theme.palette.error.main
+                        : theme.palette.success.main
                     }
                   >
                     {tx.type === "TRANSFER"
-                      ? `-R$ ${tx.value.toFixed(2)}`
-                      : `R$ ${tx.value.toFixed(2)}`}
+                      ? `-R$ ${Number(tx.value).toFixed(2)}`
+                      : `R$ ${Number(tx.value).toFixed(2)}`}
                   </Typography>
                   <Typography variant="caption" color="#8B8B8B">
                     {new Date(tx.date).toLocaleDateString("pt-BR")}

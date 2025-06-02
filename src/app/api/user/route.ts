@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { readMockData, saveMockData } from "../../../utils/mockDatabase";
+import Transactions from "@/app/(dashboard)/transactions/page";
 
 const fileName = "users.json";
 
@@ -30,6 +31,8 @@ export async function POST(request: Request) {
     email,
     password,
     active: true,
+    balance: 0,
+    
   };
 
   users.push(newUser);

@@ -48,8 +48,8 @@ export default function DashboardLayout({
                 <BalanceCard />
                 <CardBackground>{children}</CardBackground>
               </Box>
-            </Box>
             <Statement/>
+            </Box>
           </Box>
         </UserProvider>
       </Suspense>

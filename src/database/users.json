@@ -40,5 +40,21 @@
     "email": "vittoriazago11@gmail.com",
     "password": "123",
     "active": true
+  },
+  {
+    "id": 7,
+    "name": "Lucas",
+    "email": "lucas@teste.com",
+    "password": "123",
+    "active": true,
+    "balance": 10
+  },
+  {
+    "id": 8,
+    "name": "Luucas",
+    "email": "lucas@teste2.com",
+    "password": "123",
+    "active": true,
+    "balance": 0
   }
 ]

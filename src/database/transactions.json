@@ -1,26 +1,23 @@
 [
   {
-    "id": 487756,
-    "type": "Depósito",
-    "value": "1",
-    "userId": "4"
+    "id": "655356bc-1898-4aa2-8d31-2b76a5425d9b",
+    "type": "TRANSFER",
+    "value": 50,
+    "userId": "7",
+    "date": "2025-06-01T23:42:36.787Z"
   },
   {
-    "id": 220417,
-    "type": "Depósito",
-    "value": "2",
-    "userId": "a"
+    "id": "daa8bd06-8ba4-4942-8caf-c0470facdddd",
+    "type": "DEPOSIT",
+    "value": 60,
+    "userId": "7",
+    "date": "2025-06-01T23:42:43.042Z"
   },
   {
-    "id": 893976,
-    "type": "Depósito",
-    "value": "2",
-    "userId": "4"
-  },
-  {
-    "id": 796316,
-    "type": "Depósito",
-    "value": "12",
-    "userId": "44"
+    "id": "c7c43207-736e-4a97-b070-520380fcf67b",
+    "type": "DEPOSIT",
+    "value": 40,
+    "userId": "8",
+    "date": "2025-06-01T23:59:46.521Z"
   }
 ]
