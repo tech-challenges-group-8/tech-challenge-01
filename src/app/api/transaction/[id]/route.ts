@@ -3,9 +3,9 @@ import { cookies } from 'next/headers';
 import { readMockData, saveMockData } from "../../../../utils/mockDatabase";
 const fileName = "transactions.json";
 
-// 📤 PATCH → atualiza
-export async function PATCH(request: Request, context: { params: { id: string } }) {
-    const id = context.params.id;
+// PATCH → atualiza
+export async function PATCH(request: Request, { params }: { params: { id: string } }) {
+    const {id} = await params;
     const updatedTx = await request.json();
 
     const transactions = await readMockData(fileName);
@@ -27,7 +27,6 @@ export async function PATCH(request: Request, context: { params: { id: string } 
     let newValue = Number(updatedTx.value);
     let oldValue = Number(oldTx.value);
 
-    // Ajustar saldo: desfazer valor anterior e aplicar o novo
     if (oldTx.type === "TRANSFER") {
         users[userIndex].balance += oldValue;
     } else {
@@ -51,10 +50,9 @@ export async function PATCH(request: Request, context: { params: { id: string } 
     });
 }
 
-
-// 🗑️ DELETE → exclui
-export async function DELETE(request: Request, context: { params: { id: string } }) {
-    const id = context.params.id;
+// DELETE → exclui
+export async function DELETE(request: Request, { params }: { params: { id: string } }) {
+    const {id} = await params;
 
     const transactions = await readMockData(fileName);
     const users = await readMockData("users.json");
@@ -73,7 +71,6 @@ export async function DELETE(request: Request, context: { params: { id: string }
 
     const deletedTx = transactions.splice(index, 1)[0];
 
-    // Ajustar saldo
     if (deletedTx.type === "TRANSFER") {
         users[userIndex].balance += deletedTx.value;
     } else {
