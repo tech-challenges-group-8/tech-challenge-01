@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 
 import { readMockData, saveMockData } from "../../../utils/mockDatabase";
-import Transactions from "@/app/(dashboard)/transactions/page";
 
 const fileName = "users.json";
 
