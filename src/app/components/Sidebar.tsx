@@ -28,17 +28,17 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ href, text }) => {
       href={href}
       sx={{
         borderLeft: {
-          xs: "none",
-          md: isActive ? `3px solid ${theme.palette.action.active}` : "none",
+          sm: "none",
+          lg: isActive ? `3px solid ${theme.palette.action.active}` : "none",
         },
         borderBottom: {
-          xs: isActive ? `3px solid ${theme.palette.action.active}` : "none",
-          md: "none",
+          sm: isActive ? `3px solid ${theme.palette.action.active}` : "none",
+          lg: "none",
         },
-        minWidth: { xs: "auto", md: 180 },
-        justifyContent: { xs: "center", md: "flex-start" },
-        paddingX: { xs: 1, md: 2 },
-        paddingY: { xs: 0.5, md: 1 },
+        minWidth: { sm: "auto", lg: 180 },
+        justifyContent: { sm: "center", lg: "flex-start" },
+        paddingX: { sm: 1, lg: 2 },
+        paddingY: { sm: 0.5, lg: 1 },
       }}
     >
       <ListItemText
@@ -49,7 +49,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ href, text }) => {
               ? theme.palette.action.active
               : theme.palette.text.primary,
             fontWeight: isActive ? "bold" : "normal",
-            textAlign: { xs: "center", md: "left" },
+            textAlign: { sm: "center", lg: "left" },
           },
         }}
       />
@@ -64,24 +64,24 @@ const Sidebar = () => {
   return (
     <Box
       sx={{
-        display: "flex",
-        flexDirection: { xs: "row", md: "column" },
-        width: { xs: `calc(100% - ${theme.spacing(4)})`, md: 180 },
-        height: { xs: "auto", md: "100%" },
+        display: { xs: "none", sm: "flex" },
+        flexDirection: { sm: "row", lg: "column" },
+        width: { sm: `calc(100% - ${theme.spacing(4)})`, lg: 180 },
+        height: { sm: "auto", lg: "100%" },
         borderRadius: 2,
         bgcolor: theme.palette.background.paper,
         boxShadow: 2,
-        justifyContent: { xs: "space-around", md: "flex-start" },
+        justifyContent: { sm: "space-around", lg: "flex-start" },
         alignItems: "center",
-        padding: { xs: theme.spacing(1), md: 0 },
+        padding: { sm: theme.spacing(1), lg: 0 },
       }}
     >
       <List
         sx={{
           display: "flex",
-          flexDirection: { xs: "row", md: "column" },
+          flexDirection: { sm: "row", lg: "column" },
           width: "100%",
-          justifyContent: { xs: "space-around", md: "flex-start" },
+          justifyContent: { sm: "space-around", lg: "flex-start" },
           alignItems: "center",
         }}
       >

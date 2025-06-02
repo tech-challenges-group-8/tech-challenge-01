@@ -25,7 +25,6 @@ export default function CardBackground({
           position: "relative",
         }}
       >
-        {children}
         <Box
           sx={{
             position: "absolute",
@@ -34,6 +33,7 @@ export default function CardBackground({
             display: "grid",
             gridTemplateColumns: "repeat(4, 45px)",
             gridTemplateRows: "repeat(4, 45px)",
+            zIndex: 0,
           }}
         >
           {[
@@ -70,6 +70,7 @@ export default function CardBackground({
             display: "grid",
             gridTemplateColumns: "repeat(4, 45px)",
             gridTemplateRows: "repeat(4, 45px)",
+            zIndex: 0,
           }}
         >
           {[
@@ -97,6 +98,14 @@ export default function CardBackground({
                 }}
               />
             ))}
+        </Box>
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
+          {children}
         </Box>
       </Paper>
     </Box>

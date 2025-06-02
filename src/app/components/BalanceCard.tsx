@@ -44,7 +44,6 @@ const BalanceCard = () => {
       sx={{
         borderRadius: 2,
         padding: 4,
-        width: "100%",
         minHeight: "200px",
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.secondary.contrastText,

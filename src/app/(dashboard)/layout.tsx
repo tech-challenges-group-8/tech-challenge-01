@@ -34,8 +34,9 @@ export default function DashboardLayout({
                 justifyContent: "center",
                 alignItems: "flex-start",
                 flexDirection: {
-                  xs: "column", // Layout em coluna para telas pequenas
-                  md: "row", // Layout em linha para telas médias e maiores
+                  xs: "column",
+                  sm: "column",
+                  lg: "row",
                 },
               }}
             >
