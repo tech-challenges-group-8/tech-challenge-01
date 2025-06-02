@@ -47,5 +47,26 @@
     "value": 5000,
     "userId": "6",
     "date": "2025-06-02T02:02:08.565Z"
+  },
+  {
+    "id": "05d58c2f-6061-4ef1-b330-55395ef07844",
+    "type": "DEPOSIT",
+    "value": 500,
+    "userId": "9",
+    "date": "2025-06-02T02:11:57.552Z"
+  },
+  {
+    "id": "3bef6882-be80-4138-922d-1fb21e3297ad",
+    "type": "DEPOSIT",
+    "value": 520,
+    "userId": "9",
+    "date": "2025-06-02T02:59:22.601Z"
+  },
+  {
+    "id": "969a14cd-cf76-4aaa-b923-c4021cf45ed9",
+    "type": "TRANSFER",
+    "value": 250,
+    "userId": "9",
+    "date": "2025-06-02T02:59:31.365Z"
   }
 ]
