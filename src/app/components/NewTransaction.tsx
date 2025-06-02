@@ -10,11 +10,14 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import NumericInputField from "./NumericInputField";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useUser } from "../contexts/UserContext";
+// Import Transaction type
+// Keep useUser for other user data if needed
+import { useTransactions } from "../hooks/useTransactions"; // Import useTransactions hook
+
+import NumericInputField from "./NumericInputField";
 
 const TRANSACTION_TYPES = (t: any) => [
   { value: "DEPOSIT", label: t("newTransaction.typeDeposit") },
@@ -22,7 +25,7 @@ const TRANSACTION_TYPES = (t: any) => [
 ];
 
 export default function NewTransaction() {
-  const { addTransaction } = useUser();
+  const { addTransaction } = useTransactions(); // Get addTransaction from useTransactions hook
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -68,7 +71,7 @@ export default function NewTransaction() {
     };
 
     try {
-      await addTransaction(newTransaction);
+      await addTransaction(newTransaction); // Call addTransaction from hook
       setType("");
       setValue("");
     } catch (err) {
