@@ -58,7 +58,6 @@ export default function Statement() {
     setEditedValue("");
   };
 
-  // Agrupamento e deduplicação
   const uniqueTransactions = Array.from(
     new Map(transactions.map((t) => [t.id, t])).values()
   );
