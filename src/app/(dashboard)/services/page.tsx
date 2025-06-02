@@ -1,7 +1,6 @@
-import React from "react";
 import { Container, Typography } from "@mui/material";
 
-const Services = () => {
+export default function Services() {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
@@ -9,6 +8,4 @@ const Services = () => {
       </Typography>
     </Container>
   );
-};
-
-export default Services;
+}

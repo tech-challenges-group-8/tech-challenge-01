@@ -1,0 +1,44 @@
+[
+  {
+    "id": 1,
+    "name": "Teste",
+    "email": "asdadas",
+    "password": "123",
+    "active": true
+  },
+  {
+    "id": 2,
+    "name": "Fernando",
+    "email": "email@gmail.com",
+    "password": "123",
+    "active": true
+  },
+  {
+    "id": 4,
+    "name": "Fernando",
+    "email": "fernando@grupo8.com",
+    "password": "123",
+    "active": true
+  },
+  {
+    "id": 3,
+    "name": "Maza",
+    "email": "maza@mail.com",
+    "password": "Maza",
+    "active": true
+  },
+  {
+    "id": 5,
+    "name": "teste",
+    "email": "teste@teste",
+    "password": "123",
+    "active": false
+  },
+  {
+    "id": 6,
+    "name": "Vittoria",
+    "email": "vittoriazago11@gmail.com",
+    "password": "123",
+    "active": true
+  }
+]

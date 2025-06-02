@@ -12,9 +12,10 @@ export const COLORS = {
   neutral: {
     900: "#000000",
     700: "#4A5568", // Texto secundário
-    500: "#6B7280", // Texto desativado/menu inativo
-    300: "#D1D5DB", // Bordas/inativo
-    100: "#F5F5F5", // Fundo claro
+    600: "#47A138", // Texto active
+    500: "#6B7280", // Texto desativado/menu inactive
+    300: "#D1D5DB", // Bordas/inactive
+    100: "#e4ede3", // Fundo claro
     white: "#FFFFFF",
   },
 };

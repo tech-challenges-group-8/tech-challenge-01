@@ -1,25 +1,34 @@
+"use client";
+
+import {
+  Box,
+  List,
+  ListItemButton,
+  ListItemText,
+  useTheme,
+} from "@mui/material";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import React from "react";
-import { Box, List, ListItemButton, ListItemText, useTheme } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 interface SidebarItemProps {
-  to: string;
+  href: string;
   text: string;
 }
 
-const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
+const SidebarItem: React.FC<SidebarItemProps> = ({ href, text }) => {
   const theme = useTheme();
-  const location = useLocation();
-  const isActive = location.pathname === to;
+  const pathname = usePathname();
+  const isActive = pathname === href;
 
   return (
     <ListItemButton
-      component={Link}
-      to={to}
+      LinkComponent={Link}
+      href={href}
       sx={{
         borderLeft: isActive
-          ? `3px solid ${theme.palette.primary.contrastText}`
+          ? `3px solid ${theme.palette.action.active}`
           : "none",
       }}
     >
@@ -28,7 +37,7 @@ const SidebarItem: React.FC<SidebarItemProps> = ({ to, text }) => {
         primaryTypographyProps={{
           sx: {
             color: isActive
-              ? theme.palette.primary.contrastText
+              ? theme.palette.action.active
               : theme.palette.text.primary,
             fontWeight: isActive ? "bold" : "normal",
           },
@@ -46,15 +55,17 @@ const Sidebar = () => {
     <Box
       sx={{
         width: 180,
+        height: "100%",
+        borderRadius: 2,
         bgcolor: theme.palette.background.paper,
         boxShadow: 2,
       }}
     >
       <List sx={{ width: "100%" }}>
-        <SidebarItem to="/" text={t("sidebar.home")} />
-        <SidebarItem to="/transactions" text={t("sidebar.transactions")} />
-        <SidebarItem to="/investiments" text={t("sidebar.investments")} />
-        <SidebarItem to="/services" text={t("sidebar.services")} />
+        <SidebarItem href="/dashboard" text={t("sidebar.home")} />
+        <SidebarItem href="/transactions" text={t("sidebar.transactions")} />
+        <SidebarItem href="/investiments" text={t("sidebar.investments")} />
+        <SidebarItem href="/services" text={t("sidebar.services")} />
       </List>
     </Box>
   );
