@@ -7,10 +7,10 @@ import {
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
+import NumericInputField from "./NumericInputField";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -131,29 +131,22 @@ export default function NewTransaction() {
           <Typography variant="body1" fontWeight={600} color="#dee9ea" mb={1}>
             {t("newTransaction.valueLabel")}
           </Typography>
-          <TextField
+          <NumericInputField
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
               if (error) setError("");
             }}
             placeholder={t("newTransaction.valuePlaceholder")}
-            type="number"
-            InputProps={{
-              inputProps: { min: 0.01, step: 0.01 },
-              style: {
-                height: 48,
-              },
-            }}
             sx={{
-              ...commonInputStyles,
               zIndex: 1,
               width: { xs: "100%", sm: "250px" },
               "& .MuiInputBase-input": {
-                ...commonInputStyles["& .MuiInputBase-input"],
                 textAlign: "center",
               },
             }}
+            error={!!error}
+            helperText={error}
           />
         </Box>
 

@@ -42,8 +42,8 @@ const BalanceCard = () => {
   return (
     <Box
       sx={{
-        borderRadius: 2,
-        padding: 4,
+        borderRadius: theme.shape.borderRadius,
+        padding: theme.spacing(4),
         minHeight: "200px",
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.secondary.contrastText,
@@ -51,12 +51,14 @@ const BalanceCard = () => {
         justifyContent: "flex-start",
         alignItems: "flex-start",
         flexWrap: "wrap",
-        gap: "20%",
+        gap: "40%",
       }}
     >
       <Box>
         <Typography variant="h6" fontWeight="bold">
-          {t("balanceCard.greeting", { name: user?.name || t("balanceCard.guest") })}
+          {t("balanceCard.greeting", {
+            name: user?.name || t("balanceCard.guest"),
+          })}
         </Typography>
         <Typography variant="body2" mt={3}>
           {now}

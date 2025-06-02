@@ -68,7 +68,7 @@ const Sidebar = () => {
         flexDirection: { sm: "row", lg: "column" },
         width: { sm: `calc(100% - ${theme.spacing(4)})`, lg: 180 },
         height: { sm: "auto", lg: "100%" },
-        borderRadius: 2,
+        borderRadius: theme.shape.borderRadius,
         bgcolor: theme.palette.background.paper,
         boxShadow: 2,
         justifyContent: { sm: "space-around", lg: "flex-start" },

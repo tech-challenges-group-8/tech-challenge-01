@@ -3,6 +3,9 @@ import { createTheme } from "@mui/material/styles";
 import { COLORS, SHAPE, SPACING, TYPOGRAPHY } from "./tokens";
 
 const theme = createTheme({
+  shape: {
+    borderRadius: SHAPE.borderRadius,
+  },
   palette: {
     primary: {
       main: COLORS.brand.main,

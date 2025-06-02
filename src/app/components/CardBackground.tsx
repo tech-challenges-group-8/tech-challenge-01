@@ -1,6 +1,6 @@
 "use client";
 
-import { Box, Paper } from "@mui/material";
+import { Box, Paper, useTheme } from "@mui/material";
 
 import BoxMatrixBackground from "./BoxMatrixBackground";
 
@@ -9,10 +9,12 @@ export default function CardBackground({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = useTheme();
+
   return (
     <Box
       sx={{
-        borderRadius: 2,
+        borderRadius: theme.shape.borderRadius,
         width: "100%",
         minHeight: "400px",
         display: "flex",
@@ -25,6 +27,7 @@ export default function CardBackground({
           width: "100%",
           backgroundColor: "#cbcbcb",
           position: "relative",
+          borderRadius: theme.shape.borderRadius,
         }}
       >
         <BoxMatrixBackground

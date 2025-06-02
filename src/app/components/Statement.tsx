@@ -8,12 +8,12 @@ import {
   IconButton,
   Divider,
   useTheme,
-  TextField,
   Button,
   Modal,
   Fade,
   Backdrop,
 } from "@mui/material";
+import NumericInputField from "./NumericInputField";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -83,12 +83,8 @@ export default function Statement() {
           xs: "400px",
           md: "100%",
         },
-        bgcolor: "#F5F5F5",
-        borderRadius: "8px",
-        marginTop: {
-          xs: "16px", // Adiciona margem superior em telas pequenas
-          md: "0", // Remove margem superior em telas médias e maiores
-        },
+        bgcolor: theme.palette.background.paper,
+        borderRadius: theme.shape.borderRadius,
         paddingX: { xs: 1, md: 2 },
         paddingY: { xs: 0.5, md: 1 },
       }}
@@ -137,11 +133,16 @@ export default function Statement() {
 
                     {editingId === tx.id ? (
                       <Box display="flex" alignItems="center" gap={1}>
-                        <TextField
-                          size="small"
+                        <NumericInputField
                           value={editedValue}
                           onChange={handleValueChange}
-                          inputProps={{ style: { width: "80px" } }}
+                          sx={{
+                            zIndex: 1,
+                            width: { xs: "100%", sm: "250px" },
+                            "& .MuiInputBase-input": {
+                              textAlign: "center",
+                            },
+                          }}
                         />
                         <Button
                           variant="outlined"
@@ -166,21 +167,28 @@ export default function Statement() {
                       </Typography>
                     )}
 
-                    <Typography variant="caption" color="#8B8B8B">
+                    <Typography
+                      variant="caption"
+                      color={theme.palette.text.secondary}
+                    >
                       {new Date(tx.date).toLocaleDateString("pt-BR")}
                     </Typography>
                   </Box>
 
                   <Box>
                     <IconButton onClick={() => startEditing(tx)}>
-                      <EditIcon sx={{ fontSize: 18, color: "#004D61" }} />
+                      <EditIcon
+                        sx={{ fontSize: 18, color: theme.palette.primary.main }}
+                      />
                     </IconButton>
                     <IconButton onClick={() => handleOpenModal(tx.id)}>
-                      <DeleteIcon sx={{ fontSize: 18, color: "#004D61" }} />
+                      <DeleteIcon
+                        sx={{ fontSize: 18, color: theme.palette.primary.main }}
+                      />
                     </IconButton>
                   </Box>
                 </Box>
-                <Divider sx={{ mt: 1 }} />
+                <Divider sx={{ mt: theme.spacing(1) }} />
 
                 <Modal
                   open={openModalId === tx.id}
@@ -196,14 +204,15 @@ export default function Statement() {
                         top: "50%",
                         left: "50%",
                         transform: "translate(-50%, -50%)",
-                        bgcolor: "background.paper",
+                        bgcolor: theme.palette.background.paper,
+                        color: theme.palette.text.primary,
                         boxShadow: 24,
-                        p: 4,
-                        borderRadius: 2,
+                        p: theme.spacing(4),
+                        borderRadius: theme.shape.borderRadius,
                         width: 300,
                       }}
                     >
-                      <Typography variant="body1" mb={2}>
+                      <Typography variant="body1" mb={theme.spacing(2)}>
                         {t("statement.confirmDelete")}
                       </Typography>
                       <Button
