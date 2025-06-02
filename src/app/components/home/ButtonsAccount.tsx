@@ -2,7 +2,7 @@
 
 import { Box } from "@mui/material";
 import { SnackbarProvider, useSnackbar } from "notistack";
-import { VariantType } from "notistack"; 
+import type { VariantType } from "notistack"; 
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "next/navigation";
