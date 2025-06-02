@@ -2,13 +2,7 @@
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import {
-  Box,
-  Typography,
-  IconButton,
-  Divider,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, IconButton, Divider, useTheme } from "@mui/material";
 
 import type { Transaction } from "../contexts/UserContext";
 import { useUser } from "../contexts/UserContext";
@@ -54,15 +48,29 @@ export default function Statement() {
   return (
     <Box
       sx={{
-        width: "282px",
-        height: "900px",
+        width: {
+          xs: "90%",
+          md: "282px",
+        },
+        height: {
+          xs: "400px",
+          md: "100%",
+        },
         bgcolor: "#F5F5F5",
         borderRadius: "8px",
         p: 2,
-        overflowY: "auto",
+        marginTop: {
+          xs: "16px", // Adiciona margem superior em telas pequenas
+          md: "0", // Remove margem superior em telas médias e maiores
+        },
       }}
     >
-      <Typography variant="h6" fontWeight="bold" mb={2} color={theme.palette.primary.main}>
+      <Typography
+        variant="h6"
+        fontWeight="bold"
+        mb={2}
+        color={theme.palette.primary.main}
+      >
         Extrato
       </Typography>
 

@@ -16,7 +16,7 @@ export default function CardBackground({
       sx={{
         borderRadius: 2,
         padding: 4,
-        width: "690px",
+        width: "90%",
         height: "425px",
         backgroundColor: "#cbcbcb",
         position: "relative",

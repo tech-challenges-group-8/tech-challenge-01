@@ -28,12 +28,15 @@ export default function DashboardLayout({
             <Box
               sx={{
                 display: "flex",
-                height: "calc(100vh - 68px)",
                 backgroundColor: theme.palette.background.default,
                 padding: "16px",
                 gap: "16px",
                 justifyContent: "center",
                 alignItems: "flex-start",
+                flexDirection: {
+                  xs: "column", // Layout em coluna para telas pequenas
+                  md: "row", // Layout em linha para telas médias e maiores
+                },
               }}
             >
               <Sidebar />
@@ -41,12 +44,13 @@ export default function DashboardLayout({
                 sx={{
                   display: "grid",
                   gridGap: "16px",
+                  width: "100%",
                 }}
               >
                 <BalanceCard />
                 <CardBackground>{children}</CardBackground>
               </Box>
-            <Statement/>
+              <Statement />
             </Box>
           </Box>
         </UserProvider>
