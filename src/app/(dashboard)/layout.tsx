@@ -44,7 +44,7 @@ export default function DashboardLayout({
                 sx={{
                   display: "grid",
                   gridGap: "16px",
-                  width: "100%",
+                  width: { xs: `calc(100% - ${theme.spacing(2)})`, md: "100%" },
                 }}
               >
                 <BalanceCard />
