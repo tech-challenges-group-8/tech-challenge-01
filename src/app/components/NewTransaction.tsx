@@ -84,7 +84,7 @@ export default function NewTransaction() {
 
   return (
     <>
-      <Typography variant="h4" fontWeight="bold" color="#dee9ea" mb={2}>
+      <Typography variant="h4" fontWeight="bold" color="#dee9ea" mb={2} sx={{ color: { xs: theme.palette.primary.main, sm: '#dee9ea' } }}>
         {t("newTransaction.title")}
       </Typography>
 
@@ -132,7 +132,7 @@ export default function NewTransaction() {
         </FormControl>
 
         <Box>
-          <Typography variant="body1" fontWeight={600} color="#dee9ea" mb={1}>
+          <Typography variant="body1" fontWeight={600} mb={1} sx={{ color: { xs: theme.palette.primary.main, sm: '#dee9ea' } }}>
             {t("newTransaction.valueLabel")}
           </Typography>
           <NumericInputField

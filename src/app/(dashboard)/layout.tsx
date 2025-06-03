@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
 import { Suspense } from "react";
 
@@ -21,6 +21,7 @@ export default function DashboardLayout({
 }) {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Suspense fallback={<div>Loading...</div>}>
         <UserProvider>
           <Box>
