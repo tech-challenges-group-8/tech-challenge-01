@@ -1,7 +1,9 @@
 "use client";
 
+import MenuIcon from '@mui/icons-material/Menu';
 import { AppBar, Toolbar, Typography, Box, Avatar, useTheme, IconButton, Menu, MenuItem } from '@mui/material';
-import { useRouter } from "next/navigation";
+import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -24,6 +26,19 @@ const Header = () => {
     setAnchorEl(null);
   };
 
+ 
+  const [sidebarAnchorEl, setSidebarAnchorEl] = useState<null | HTMLElement>(null);
+  const sidebarOpen = Boolean(sidebarAnchorEl);
+  const pathname = usePathname();
+
+  const handleSidebarMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setSidebarAnchorEl(event.currentTarget);
+  };
+
+  const handleSidebarClose = () => {
+    setSidebarAnchorEl(null);
+  };
+
   const handleLogout = async () => {
     handleClose();
     try {
@@ -31,8 +46,8 @@ const Header = () => {
         method: "POST",
       });
       if (response.ok) {
-        setUser(null); // Clear user context
-        router.push("/"); // Redirect to home page
+        setUser(null);
+        router.push("/");
       } else {
         console.error("Logout failed");
       }
@@ -44,9 +59,25 @@ const Header = () => {
   return (
     <AppBar position="static">
       <Toolbar sx={{ justifyContent: "space-between", height: "68px" }}>
+        {/* Sidebar Menu Icon for xs screens */}
+        <IconButton
+          sx={{ display: { xs: "block", sm: "none" } }}
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          onClick={handleSidebarMenu}
+          aria-controls={sidebarOpen ? "sidebar-menu" : undefined}
+          aria-haspopup="true"
+          aria-expanded={sidebarOpen ? "true" : undefined}
+        >
+          <MenuIcon />
+        </IconButton>
+
+        {/* Placeholder for balance on mobile (if needed, otherwise remove) */}
         <Box sx={{ visibility: { xs: "hidden", md: "visible" } }}>
-          {/* Placeholder for balance on mobile */}
+          {/* This box might be removed or repurposed later if balance is moved */}
         </Box>
+
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Typography
             variant="body2"
@@ -93,6 +124,58 @@ const Header = () => {
           </Menu>
         </Box>
       </Toolbar>
+
+      {/* Sidebar Menu for xs screens */}
+      <Menu
+        id="sidebar-menu"
+        anchorEl={sidebarAnchorEl}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "left",
+        }}
+        open={sidebarOpen}
+        onClose={handleSidebarClose}
+        MenuListProps={{
+          'aria-labelledby': 'sidebar-menu-button',
+        }}
+      >
+        <MenuItem
+          component={Link}
+          href="/dashboard"
+          onClick={handleSidebarClose}
+          selected={pathname === "/dashboard"}
+        >
+          {t("sidebar.home")}
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          href="/transactions"
+          onClick={handleSidebarClose}
+          selected={pathname === "/transactions"}
+        >
+          {t("sidebar.transactions")}
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          href="/investiments"
+          onClick={handleSidebarClose}
+          selected={pathname === "/investiments"}
+        >
+          {t("sidebar.investments")}
+        </MenuItem>
+        <MenuItem
+          component={Link}
+          href="/services"
+          onClick={handleSidebarClose}
+          selected={pathname === "/services"}
+        >
+          {t("sidebar.services")}
+        </MenuItem>
+      </Menu>
     </AppBar>
   );
 };

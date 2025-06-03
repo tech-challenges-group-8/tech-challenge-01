@@ -42,22 +42,23 @@ const BalanceCard = () => {
   return (
     <Box
       sx={{
-        borderRadius: 2,
-        padding: 4,
-        width: "690px",
-        minHeight: "200px",
+        borderRadius: theme.shape.borderRadius,
+        padding: theme.spacing(4),
+        minHeight: "250px",
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.secondary.contrastText,
         display: "flex",
         justifyContent: "flex-start",
         alignItems: "flex-start",
         flexWrap: "wrap",
-        gap: "220px",
+        gap: { lg: "40%", md: "40%", xs: "20%" },
       }}
     >
       <Box>
         <Typography variant="h6" fontWeight="bold">
-          {t("balanceCard.greeting", { name: user?.name || t("balanceCard.guest") })}
+          {t("balanceCard.greeting", {
+            name: user?.name || t("balanceCard.guest"),
+          })}
         </Typography>
         <Typography variant="body2" mt={3}>
           {now}

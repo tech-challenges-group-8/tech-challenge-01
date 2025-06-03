@@ -20,6 +20,7 @@
     "typeLabel": "Transaction Type",
     "valueLabel": "Value",
     "valuePlaceholder": "0.00",
+    "loadingButton": "Inserting transaction...",
     "completeButton": "Complete Transaction",
     "nameLabel": "Name",
     "passwordLabel": "Password"
@@ -70,5 +71,15 @@
     "creditCard": "Credit Card",
     "contactTitle": "Contact",
     "developedBy": "Developed by Alura"
+  },
+  "statement": {
+    "title": "Statement",
+    "invalidValue": "Invalid value",
+    "transfer": "Transfer",
+    "deposit": "Deposit",
+    "ok": "OK",
+    "confirmDelete": "Are you sure you want to delete this transaction?",
+    "deleteTransaction": "Delete transaction",
+    "saving": "Saving"
   }
 }

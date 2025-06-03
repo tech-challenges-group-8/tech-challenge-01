@@ -20,6 +20,7 @@
     "typeLabel": "Tipo de transação",
     "valueLabel": "Valor",
     "valuePlaceholder": "0,00",
+    "loadingButton": "Inserindo transação...",
     "completeButton": "Concluir transação",
     "nameLabel": "Nome",
     "passwordLabel": "Senha"
@@ -70,5 +71,15 @@
     "creditCard": "Cartão de crédito",
     "contactTitle": "Contato",
     "developedBy": "Desenvolvido por Alura"
+  },
+  "statement": {
+    "title": "Extrato",
+    "invalidValue": "Valor inválido",
+    "transfer": "Transferência",
+    "deposit": "Depósito",
+    "ok": "OK",
+    "confirmDelete": "Tem certeza que deseja excluir esta transação?",
+    "deleteTransaction": "Deletar transação",
+    "saving": "Salvando"
   }
 }

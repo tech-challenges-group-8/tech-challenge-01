@@ -1,6 +1,6 @@
 "use client";
 
-import { ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
 import { Suspense } from "react";
 
@@ -21,6 +21,7 @@ export default function DashboardLayout({
 }) {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Suspense fallback={<div>Loading...</div>}>
         <UserProvider>
           <Box>
@@ -28,12 +29,16 @@ export default function DashboardLayout({
             <Box
               sx={{
                 display: "flex",
-                height: "calc(100vh - 68px)",
                 backgroundColor: theme.palette.background.default,
                 padding: "16px",
                 gap: "16px",
                 justifyContent: "center",
                 alignItems: "flex-start",
+                flexDirection: {
+                  xs: "column",
+                  sm: "column",
+                  lg: "row",
+                },
               }}
             >
               <Sidebar />
@@ -41,12 +46,13 @@ export default function DashboardLayout({
                 sx={{
                   display: "grid",
                   gridGap: "16px",
+                  width: { xs: `calc(100% - ${theme.spacing(2)})`, md: "100%" },
                 }}
               >
                 <BalanceCard />
                 <CardBackground>{children}</CardBackground>
               </Box>
-            <Statement/>
+              <Statement />
             </Box>
           </Box>
         </UserProvider>

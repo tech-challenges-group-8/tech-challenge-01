@@ -2,19 +2,22 @@
 
 import {
   Box,
-  Button,
   FormControl,
   InputLabel,
   MenuItem,
   Select,
-  TextField,
   Typography,
   useTheme,
 } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import { useUser } from "../contexts/UserContext";
+// Import Transaction type
+// Keep useUser for other user data if needed
+import { useTransactions } from "../hooks/useTransactions"; // Import useTransactions hook
+
+import LoadingButton from "./LoadingButton";
+import NumericInputField from "./NumericInputField";
 
 const TRANSACTION_TYPES = (t: any) => [
   { value: "DEPOSIT", label: t("newTransaction.typeDeposit") },
@@ -22,7 +25,7 @@ const TRANSACTION_TYPES = (t: any) => [
 ];
 
 export default function NewTransaction() {
-  const { addTransaction } = useUser();
+  const { addTransaction } = useTransactions(); // Get addTransaction from useTransactions hook
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
@@ -68,7 +71,7 @@ export default function NewTransaction() {
     };
 
     try {
-      await addTransaction(newTransaction);
+      await addTransaction(newTransaction); // Call addTransaction from hook
       setType("");
       setValue("");
     } catch (err) {
@@ -81,7 +84,7 @@ export default function NewTransaction() {
 
   return (
     <>
-      <Typography variant="h4" fontWeight="bold" color="#dee9ea" mb={2}>
+      <Typography variant="h4" fontWeight="bold" color="#dee9ea" mb={2} sx={{ color: { xs: theme.palette.primary.main, sm: '#dee9ea' } }}>
         {t("newTransaction.title")}
       </Typography>
 
@@ -113,8 +116,10 @@ export default function NewTransaction() {
             sx={{
               ...commonInputStyles,
               height: "48px",
+              width: { xs: "100%", sm: "400px" },
               "& .MuiSelect-icon": { color: theme.palette.primary.main },
             }}
+            disabled={isSubmitting}
           >
             {TRANSACTION_TYPES(t).map((transactionType) => (
               <MenuItem
@@ -128,32 +133,25 @@ export default function NewTransaction() {
         </FormControl>
 
         <Box>
-          <Typography variant="body1" fontWeight={600} color="#dee9ea" mb={1}>
+          <Typography variant="body1" fontWeight={600} mb={1} sx={{ color: { xs: theme.palette.primary.main, sm: '#dee9ea' } }}>
             {t("newTransaction.valueLabel")}
           </Typography>
-          <TextField
+          <NumericInputField
             value={value}
             onChange={(e) => {
               setValue(e.target.value);
               if (error) setError("");
             }}
             placeholder={t("newTransaction.valuePlaceholder")}
-            type="number"
-            InputProps={{
-              inputProps: { min: 0.01, step: 0.01 },
-              style: {
-                height: 48,
-              },
-            }}
             sx={{
-              ...commonInputStyles,
               zIndex: 1,
-              width: { xs: "100%", sm: "250px" },
+              width: { xs: "100%", sm: "400px" },
               "& .MuiInputBase-input": {
-                ...commonInputStyles["& .MuiInputBase-input"],
                 textAlign: "center",
               },
             }}
+            error={!!error}
+            disabled={isSubmitting}
           />
         </Box>
 
@@ -163,27 +161,14 @@ export default function NewTransaction() {
           </Typography>
         )}
 
-        <Button
-          variant="contained"
+        <LoadingButton
           onClick={handleSubmit}
-          disabled={isSubmitting}
-          sx={{
-            zIndex: 1,
-            backgroundColor: theme.palette.primary.main,
-            borderRadius: "8px",
-            textTransform: "none",
-            fontWeight: 600,
-            width: { xs: "100%", sm: "250px" },
-            height: "48px",
-            "&:hover": {
-              backgroundColor: "#006B80",
-            },
-          }}
+          isSubmitting={isSubmitting}
+          loadingText={t("newTransaction.loadingButton")}
+          sx={{ width: { xs: "100%", sm: "250px" } }}
         >
-          {isSubmitting
-            ? t("newTransaction.loadingButton")
-            : t("newTransaction.completeButton")}
-        </Button>
+          {t("newTransaction.completeButton")}
+        </LoadingButton>
       </Box>
     </>
   );

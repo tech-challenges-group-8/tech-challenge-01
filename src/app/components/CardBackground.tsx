@@ -1,100 +1,66 @@
 "use client";
 
-import {
-  Box,
-  Paper,
-} from "@mui/material";
+import { Box, Paper, useTheme } from "@mui/material";
+
+import BoxMatrixBackground from "./BoxMatrixBackground";
 
 export default function CardBackground({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const theme = useTheme();
+
   return (
-    <Paper
-      elevation={3}
+    <Box
       sx={{
-        borderRadius: 2,
-        padding: 4,
-        width: "690px",
-        height: "425px",
-        backgroundColor: "#cbcbcb",
-        position: "relative",
+        borderRadius: theme.shape.borderRadius,
+        width: "100%",
+        minHeight: "400px",
+        display: "flex",
       }}
     >
-      {children}
-      <Box
+      <Paper
+        elevation={3}
         sx={{
-          position: "absolute",
-          top: 0,
-          right: 0,
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 45px)",
-          gridTemplateRows: "repeat(4, 45px)",
+          padding: 4,
+          width: "100%",
+          backgroundColor: "#cbcbcb",
+          position: "relative",
+          borderRadius: theme.shape.borderRadius,
         }}
       >
-        {[
-          [1, 0, 2, 0],
-          [0, 1, 3, 0],
-          [0, 0, 1, 0],
-          [0, 0, 3, 1],
-        ]
-          .flat()
-          .map((color, i) => (
-            <Box
-              key={i}
-              sx={{
-                width: 45,
-                height: 45,
-                backgroundColor:
-                  color === 1
-                    ? "#dee9ea"
-                    : color === 2
-                    ? "#d9d9d9"
-                    : color === 3
-                    ? "#d9d9d980"
-                    : "#cbcbcb",
-                borderRadius: i === 3 ? 2 : "inherit",
-              }}
-            />
-          ))}
-      </Box>
-      <Box
-        sx={{
-          position: "absolute",
-          bottom: 0,
-          left: 0,
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 45px)",
-          gridTemplateRows: "repeat(4, 45px)",
-        }}
-      >
-        {[
-          [1, 2, 0, 0],
-          [0, 1, 0, 0],
-          [0, 2, 1, 0],
-          [0, 3, 0, 1],
-        ]
-          .flat()
-          .map((color, i) => (
-            <Box
-              key={i}
-              sx={{
-                width: 45,
-                height: 45,
-                backgroundColor:
-                  color === 1
-                    ? "#dee9ea"
-                    : color === 2
-                    ? "#d9d9d9"
-                    : color === 3
-                    ? "#d9d9d980"
-                    : "#cbcbcb",
-                borderRadius: i === 12 ? 2 : "inherit",
-              }}
-            />
-          ))}
-      </Box>
-    </Paper>
+        <BoxMatrixBackground
+          matrix={[
+            [1, 0, 2, 0],
+            [0, 1, 3, 0],
+            [0, 0, 1, 0],
+            [0, 0, 3, 1],
+          ]}
+          colors={["#cbcbcb", "#dee9ea", "#d9d9d9", "#d9d9d980"]}
+          position="top-right"
+          borderRadiusIndex={3}
+        />
+        <BoxMatrixBackground
+          matrix={[
+            [1, 2, 0, 0],
+            [0, 1, 0, 0],
+            [0, 2, 1, 0],
+            [0, 3, 0, 1],
+          ]}
+          colors={["#cbcbcb", "#dee9ea", "#d9d9d9", "#d9d9d980"]}
+          position="bottom-left"
+          borderRadiusIndex={12}
+        />
+        <Box
+          sx={{
+            position: "relative",
+            zIndex: 10,
+          }}
+        >
+          {children}
+        </Box>
+      </Paper>
+    </Box>
   );
 }

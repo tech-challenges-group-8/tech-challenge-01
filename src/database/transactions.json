@@ -44,9 +44,9 @@
   {
     "id": "e8a1d47f-9c9a-4836-8b08-8cc1b88a6a36",
     "type": "DEPOSIT",
-    "value": 5000,
+    "value": 56334,
     "userId": "6",
-    "date": "2025-06-02T02:02:08.565Z"
+    "date": "2025-05-02T02:02:08.565Z"
   },
   {
     "id": "05d58c2f-6061-4ef1-b330-55395ef07844",
@@ -68,5 +68,68 @@
     "value": 250,
     "userId": "9",
     "date": "2025-06-02T02:59:31.365Z"
+  },
+  {
+    "id": "358d5ccf-b513-4d29-aea7-83a9219ca9a8",
+    "type": "TRANSFER",
+    "value": 10.51,
+    "userId": "6",
+    "date": "2025-05-02T22:50:53.214Z"
+  },
+  {
+    "id": "e5ec6da1-bd09-416c-a16d-be8457909902",
+    "type": "TRANSFER",
+    "value": 10,
+    "userId": "6",
+    "date": "2025-06-02T23:13:57.359Z"
+  },
+  {
+    "id": "56e00324-9994-4dc1-a3d6-3aa1ab11d400",
+    "type": "TRANSFER",
+    "value": 11,
+    "userId": "6",
+    "date": "2025-06-02T23:14:05.490Z"
+  },
+  {
+    "id": "6f8b7e98-c245-4c46-ac5d-412a1a35b4d4",
+    "type": "DEPOSIT",
+    "value": 1000,
+    "userId": "6",
+    "date": "2025-06-02T23:18:29.692Z"
+  },
+  {
+    "id": "12d9220d-1512-410d-b3ae-82d0997cf741",
+    "type": "DEPOSIT",
+    "value": 1000,
+    "userId": "6",
+    "date": "2025-06-02T23:18:35.626Z"
+  },
+  {
+    "id": "7943c7a0-cb96-4e08-8f8a-5f33523bb74a",
+    "type": "DEPOSIT",
+    "value": 100000,
+    "userId": "6",
+    "date": "2025-06-02T23:18:57.765Z"
+  },
+  {
+    "id": "4ea3d44f-183c-437a-95d2-1040ae2b7cc2",
+    "type": "TRANSFER",
+    "value": 10,
+    "userId": "6",
+    "date": "2025-06-02T23:46:39.255Z"
+  },
+  {
+    "id": "7f3a2592-a93f-4012-a57f-6a2ed461b2cb",
+    "type": "DEPOSIT",
+    "value": 10,
+    "userId": "6",
+    "date": "2025-06-02T23:46:45.588Z"
+  },
+  {
+    "id": "5f3a9931-fbc1-4919-b020-8abb3f8b941a",
+    "type": "TRANSFER",
+    "value": 10.11,
+    "userId": "6",
+    "date": "2025-06-03T01:20:04.195Z"
   }
 ]

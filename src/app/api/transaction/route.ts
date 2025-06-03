@@ -80,7 +80,11 @@ export async function POST(request: Request) {
 
 // 📤 GET → lista
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const page = parseInt(searchParams.get('page') || '1');
+  const limit = parseInt(searchParams.get('limit') || '10');
+
   const allTransactions = await readMockData(fileName);
 
   const cookieStore = await cookies();
@@ -97,5 +101,13 @@ export async function GET() {
     (tx: any) => String(tx.userId) === String(userId)
   );
 
-  return NextResponse.json({ success: true, transactions: userTransactions });
+  // Sort transactions by date in descending order
+  userTransactions.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+  // Implement pagination
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const paginatedTransactions = userTransactions.slice(startIndex, endIndex);
+
+  return NextResponse.json({ success: true, transactions: paginatedTransactions, total: userTransactions.length });
 }
