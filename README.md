@@ -62,17 +62,76 @@ npm run lint:fix
 
 Here’s an overview of the project structure:
 
-````
+```
 financial-management/
 ├── src/
+│   ├── __mocks__/          # Mock data for testing
 │   ├── app/
-│   │   ├── components/    # Reusable UI components (e.g., Header, Sidebar)
-│   │   ├── pages/         # Application pages (e.g., Dashboard, Transactions)
-│   │   ├── styles/        # Theme and global styles
-│   │   └── app.tsx        # Main application entry point
-├── public/                # Static assets (e.g., images, fonts)
-├── .eslintrc.json         # ESLint configuration
-├── package.json           # Project dependencies and scripts
-├── README.md              # Project documentation
-└── tsconfig.json          # TypeScript configuration
+│   │   ├── (dashboard)/    # Grouped routes for dashboard pages
+│   │   │   ├── dashboard/  # Dashboard page
+│   │   │   ├── investments/# Investments page
+│   │   │   ├── services/   # Services page
+│   │   │   └── transactions/# Transactions page
+│   │   ├── api/            # API routes
+│   │   │   ├── auth/       # Authentication API
+│   │   │   ├── logout/     # Logout API
+│   │   │   ├── transaction/# Transaction API
+│   │   │   └── user/       # User API
+│   │   ├── commons/        # Common utilities and configurations (e.g., i18n)
+│   │   ├── components/     # Reusable UI components
+│   │   │   ├── home/       # Home page specific components
+│   │   ├── contexts/       # React Contexts for global state management
+│   │   ├── hooks/          # Custom React hooks
+│   │   ├── styles/         # Theme and global styles (e.g., Material-UI theme, tokens)
+│   │   ├── favicon.ico     # Favicon
+│   │   ├── globals.css     # Global CSS styles
+│   │   ├── layout.tsx      # Root layout for the application
+│   │   ├── not-found.tsx   # Custom 404 page
+│   │   └── page.tsx        # Main application page
+│   ├── database/           # Local JSON database files
+│   ├── stories/            # Storybook stories for UI components
+│   │   └── decorators/     # Storybook decorators
+│   ├── utils/              # Utility functions
+│   └── middleware.ts       # Next.js middleware
+├── public/                 # Static assets (e.g., images, fonts, SVG icons)
+├── .eslintrc.json          # ESLint configuration
+├── .gitignore              # Git ignore file
+├── next.config.ts          # Next.js configuration
+├── package.json            # Project dependencies and scripts
+├── package-lock.json       # npm dependency lock file
+├── postcss.config.mjs      # PostCSS configuration
+├── README.md               # Project documentation
+├── tsconfig.json           # TypeScript configuration
+└── yarn.lock               # Yarn dependency lock file
 ```
+
+## Storybook Commands
+
+Storybook is used for developing and showcasing UI components in isolation.
+
+To run Storybook in development mode:
+
+```bash
+npm run storybook
+```
+
+This will open Storybook in your browser at `http://localhost:6006`.
+
+To build a static Storybook production bundle:
+
+```bash
+npm run build-storybook
+```
+
+The static build will be output to the `storybook-static` directory.
+
+## Authors
+
+- <img src="https://avatars.githubusercontent.com/u/132622525?v=4" width="24" height="24" alt="Fernando Gustavo Cortez" style="border-radius: 50%; vertical-align: middle;"> **Fernando Gustavo Cortez** - [https://github.com/FernandoGustavoCortez](https://github.com/FernandoGustavoCortez)
+
+- <img src="https://avatars.githubusercontent.com/u/37480857?v=4" width="24" height="24" alt="Lucas Wenceslau" style="border-radius: 50%; vertical-align: middle;"> **Lucas Wenceslau** - [https://github.com/lucaswenceslau](https://github.com/lucaswenceslau)
+
+- <img src="https://avatars.githubusercontent.com/u/71905861?v=4" width="24" height="24" alt="Osmar" style="border-radius: 50%; vertical-align: middle;"> **Osmar** - [https://github.com/MazFilho](https://github.com/MazFilho)
+
+- <img src="https://avatars.githubusercontent.com/u/13469487?v=4" width="24" height="24" alt="Vittoria Zago" style="border-radius: 50%; vertical-align: middle;"> **Vittoria Zago** - [https://github.com/vittoriazago](https://github.com/vittoriazago)
+
