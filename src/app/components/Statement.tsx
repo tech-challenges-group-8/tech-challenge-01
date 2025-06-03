@@ -10,12 +10,17 @@ import { useTranslation } from "react-i18next";
 import type { Transaction } from "../contexts/UserContext";
 import { useTransactions } from "../hooks/useTransactions";
 
-import TransactionItem from "./TransactionItem";
+import TransactionItem from "./TransactionItem"
 
-export default function Statement() {
+interface StatementProps {
+  initialTransactions?: Transaction[];
+}
+
+export default function Statement({ initialTransactions }: StatementProps) {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { transactions } = useTransactions();
+  const hookTransactions = useTransactions().transactions;
+  const transactions = initialTransactions || hookTransactions;
 
   const uniqueTransactions = Array.from(
     new Map(transactions.map((t) => [t.id, t])).values()
@@ -35,7 +40,7 @@ export default function Statement() {
   return (
     <Box
       sx={{
-        width: { xs: `calc(100% - ${theme.spacing(4)})`, lg: "400px" },
+        width: { xs: `calc(100% - ${theme.spacing(2)})`, lg: "400px" },
         height: {
           xs: "400px",
           md: `calc(100vh - 64px - ${theme.spacing(2)} * 2)`,

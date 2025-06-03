@@ -19,6 +19,7 @@ import { useTranslation } from "react-i18next";
 import type { Transaction } from "../contexts/UserContext";
 import { useTransactions } from "../hooks/useTransactions";
 
+import LoadingButton from "./LoadingButton";
 import NumericInputField from "./NumericInputField";
 
 interface TransactionItemProps {
@@ -34,12 +35,15 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
   const [editedValue, setEditedValue] = useState(tx.value.toString());
   const [editError, setEditError] = useState("");
   const [openDeleteModal, setOpenDeleteModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleOpenDeleteModal = () => setOpenDeleteModal(true);
   const handleCloseDeleteModal = () => setOpenDeleteModal(false);
 
   const handleDeleteConfirm = async () => {
+    setLoading(true);
     await deleteTransaction(tx.id);
+    setLoading(false);
     handleCloseDeleteModal();
   };
 
@@ -63,7 +67,9 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
       return;
     }
 
+    setLoading(true);
     await editTransaction({ ...tx, value: parsed });
+    setLoading(false);
     setEditing(false);
     setEditedValue(parsed.toString());
     setEditError("");
@@ -86,6 +92,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
                 onChange={handleValueChange}
                 sx={{
                   zIndex: 1,
+                  height: "40px",
                   width: { xs: "100%", sm: "150px" },
                   "& .MuiInputBase-input": {
                     textAlign: "center",
@@ -93,10 +100,21 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
                 }}
                 error={!!editError}
                 helperText={editError}
+                disabled={loading}
               />
-              <Button variant="outlined" size="small" onClick={handleSaveEdit}>
+              <LoadingButton
+                onClick={handleSaveEdit}
+                isSubmitting={loading}
+                loadingText={t("statement.saving")}
+                sx={{
+                  height: "40px",
+                  width: "auto",
+                  minWidth: "unset",
+                  padding: "6px 16px",
+                }}
+              >
                 {t("statement.ok")}
-              </Button>
+              </LoadingButton>
             </Box>
           ) : (
             <Typography
@@ -119,7 +137,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
         </Box>
 
         <Box>
-          <IconButton onClick={handleStartEditing}>
+          <IconButton onClick={handleStartEditing} disabled={loading}>
             <EditIcon
               sx={{
                 fontSize: 18,
@@ -127,7 +145,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
               }}
             />
           </IconButton>
-          <IconButton onClick={handleOpenDeleteModal}>
+          <IconButton onClick={handleOpenDeleteModal} disabled={loading}>
             <DeleteIcon
               sx={{
                 fontSize: 18,
@@ -169,6 +187,7 @@ export default function TransactionItem({ tx }: TransactionItemProps) {
               color="error"
               fullWidth
               onClick={handleDeleteConfirm}
+              disabled={loading}
             >
               {t("statement.deleteTransaction")}
             </Button>

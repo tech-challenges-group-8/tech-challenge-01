@@ -20,6 +20,7 @@
     "typeLabel": "Transaction Type",
     "valueLabel": "Value",
     "valuePlaceholder": "0.00",
+    "loadingButton": "Inserting transaction...",
     "completeButton": "Complete Transaction",
     "nameLabel": "Name",
     "passwordLabel": "Password"
@@ -78,6 +79,7 @@
     "deposit": "Deposit",
     "ok": "OK",
     "confirmDelete": "Are you sure you want to delete this transaction?",
-    "deleteTransaction": "Delete transaction"
+    "deleteTransaction": "Delete transaction",
+    "saving": "Saving"
   }
 }

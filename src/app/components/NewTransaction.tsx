@@ -2,7 +2,6 @@
 
 import {
   Box,
-  Button,
   FormControl,
   InputLabel,
   MenuItem,
@@ -17,6 +16,7 @@ import { useTranslation } from "react-i18next";
 // Keep useUser for other user data if needed
 import { useTransactions } from "../hooks/useTransactions"; // Import useTransactions hook
 
+import LoadingButton from "./LoadingButton";
 import NumericInputField from "./NumericInputField";
 
 const TRANSACTION_TYPES = (t: any) => [
@@ -119,6 +119,7 @@ export default function NewTransaction() {
               width: { xs: "100%", sm: "400px" },
               "& .MuiSelect-icon": { color: theme.palette.primary.main },
             }}
+            disabled={isSubmitting}
           >
             {TRANSACTION_TYPES(t).map((transactionType) => (
               <MenuItem
@@ -150,6 +151,7 @@ export default function NewTransaction() {
               },
             }}
             error={!!error}
+            disabled={isSubmitting}
           />
         </Box>
 
@@ -159,27 +161,14 @@ export default function NewTransaction() {
           </Typography>
         )}
 
-        <Button
-          variant="contained"
+        <LoadingButton
           onClick={handleSubmit}
-          disabled={isSubmitting}
-          sx={{
-            zIndex: 1,
-            backgroundColor: theme.palette.primary.main,
-            borderRadius: "8px",
-            textTransform: "none",
-            fontWeight: 600,
-            width: { xs: "100%", sm: "250px" },
-            height: "48px",
-            "&:hover": {
-              backgroundColor: "#006B80",
-            },
-          }}
+          isSubmitting={isSubmitting}
+          loadingText={t("newTransaction.loadingButton")}
+          sx={{ width: { xs: "100%", sm: "250px" } }}
         >
-          {isSubmitting
-            ? t("newTransaction.loadingButton")
-            : t("newTransaction.completeButton")}
-        </Button>
+          {t("newTransaction.completeButton")}
+        </LoadingButton>
       </Box>
     </>
   );

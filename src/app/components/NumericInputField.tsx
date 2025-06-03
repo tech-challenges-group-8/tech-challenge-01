@@ -10,6 +10,7 @@ interface NumericInputFieldProps {
   error?: boolean;
   helperText?: string;
   sx?: object;
+  disabled?: boolean;
 }
 
 export default function NumericInputField({
@@ -19,6 +20,7 @@ export default function NumericInputField({
   error,
   helperText,
   sx,
+  disabled,
 }: NumericInputFieldProps) {
   const theme = useTheme();
   const { t } = useTranslation();
@@ -59,6 +61,7 @@ export default function NumericInputField({
         },
         ...sx,
       }}
+      disabled={disabled}
     />
   );
 }

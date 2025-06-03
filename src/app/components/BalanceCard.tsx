@@ -44,14 +44,14 @@ const BalanceCard = () => {
       sx={{
         borderRadius: theme.shape.borderRadius,
         padding: theme.spacing(4),
-        minHeight: "200px",
+        minHeight: "250px",
         backgroundColor: theme.palette.primary.main,
         color: theme.palette.secondary.contrastText,
         display: "flex",
         justifyContent: "flex-start",
         alignItems: "flex-start",
         flexWrap: "wrap",
-        gap: "40%",
+        gap: { lg: "40%", md: "40%", xs: "20%" },
       }}
     >
       <Box>

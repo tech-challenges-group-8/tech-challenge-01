@@ -66,7 +66,7 @@ const Sidebar = () => {
       sx={{
         display: { xs: "none", sm: "flex" },
         flexDirection: { sm: "row", lg: "column" },
-        width: { sm: `calc(100% - ${theme.spacing(4)})`, lg: 180 },
+        width: { sm: `calc(100% - ${theme.spacing(2)})`, lg: 250 },
         height: { sm: "auto", lg: "100%" },
         borderRadius: theme.shape.borderRadius,
         bgcolor: theme.palette.background.paper,
