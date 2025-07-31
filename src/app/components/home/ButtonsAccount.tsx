@@ -10,6 +10,8 @@ import { useTranslation } from "react-i18next";
 import CustomButton from "./CustomButton";
 import LoginDialog from "./LoginDialog";
 import RegisterDialog from "./RegisterDialog";
+import { authApi } from "../../lib/authApi";
+import { userApi } from "../../lib/userApi";
 
 function ButtonsAccount() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
@@ -48,28 +50,12 @@ function ButtonsAccount() {
     }
 
     try {
-      const response = await fetch("/api/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        handleClickVariant("success", t("account.loginSuccess"))();
-        setIsLoginOpen(false);
-        router.push("/dashboard");
-      } else {
-        setError(t("account.loginFailed") + data.message);
-      }
-    } catch (err) {
-      setError(t("account.loginError"));
+      const data = await authApi.login(email, password);
+      handleClickVariant("success", t("account.loginSuccess"))();
+      setIsLoginOpen(false);
+      router.push("/dashboard");
+    } catch (err: any) {
+      setError(t("account.loginFailed") + err.message);
       console.error(err);
     } finally {
       setIsLoading(false);
@@ -94,27 +80,15 @@ function ButtonsAccount() {
     }
 
     try {
-      const response = await fetch("/api/user", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          name: userName,
-          email: email,
-          password: password,
-        }),
+      const data = await userApi.createUser({
+        name: userName,
+        email: email,
+        password: password,
       });
-      const data = await response.json();
-
-      if (response.ok && data.success) {
-        setIsRegisterOpen(false);
-        handleClickVariant("success", t("account.registerSuccess"))();
-      } else {
-        setError(t("account.registerFailed") + data.message);
-      }
-    } catch (err) {
-      setError(t("account.registerError"));
+      setIsRegisterOpen(false);
+      handleClickVariant("success", t("account.registerSuccess"))();
+    } catch (err: any) {
+      setError(t("account.registerFailed") + err.message);
       console.error(err);
     } finally {
       setIsLoading(false);

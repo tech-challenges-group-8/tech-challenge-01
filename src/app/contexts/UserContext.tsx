@@ -8,6 +8,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
+import { userApi } from "../lib/userApi";
 
 export interface User {
   id: string;
@@ -40,23 +41,11 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     balance: u.balance != null ? Number(u.balance) : 0,
   });
 
-
-
-
   useEffect(() => {
     const loadUserFromCookies = async () => {
       try {
-        const response = await fetch(`/api/user-session`);
-        const data = await response.json();
-
-        if (response.ok && data.success && data.user) {
-          setUser(normalizeUser(data.user));
-        } else {
-          console.error("Falha ao buscar usuário:", data.message);
-          setUser(null);
-          Cookies.remove("userId");
-          Cookies.remove("auth");
-        }
+        const userData = await userApi.getUserSession();
+        setUser(normalizeUser(userData));
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
         setUser(null);
@@ -67,7 +56,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
     loadUserFromCookies();
   }, []);
-
 
   return (
     <UserContext.Provider

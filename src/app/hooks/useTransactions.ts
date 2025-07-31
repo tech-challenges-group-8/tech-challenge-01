@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 import { Transaction, User, useUser } from "../contexts/UserContext";
+import { transactionApi } from "../lib/transactionApi";
 
 export const useTransactions = () => {
   const { user, setUser } = useUser();
@@ -34,18 +35,8 @@ export const useTransactions = () => {
       }
 
       try {
-        const response = await fetch(`/api/transaction?userId=${user.id}`);
-        const data = await response.json();
-
-        if (response.ok && data.success && Array.isArray(data.transactions)) {
-          setTransactions(data.transactions);
-        } else {
-          console.error(
-            "Erro ao carregar transações:",
-            data.message || "Resposta inesperada"
-          );
-          setTransactions([]);
-        }
+        const transactionsData = await transactionApi.getTransactions(user.id);
+        setTransactions(transactionsData);
       } catch (error) {
         console.error("Erro de rede ao carregar transações:", error);
         setTransactions([]);
@@ -58,19 +49,7 @@ export const useTransactions = () => {
   // Add Transaction
   const addTransaction = async (tx: Transaction) => {
     try {
-      const response = await fetch("/api/transaction", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(tx),
-      });
-
-      const data = await response.json();
-      if (!response.ok || !data.success) {
-        console.error("Erro ao adicionar transação:", data.message);
-        return;
-      }
-
-      const savedTx = data.transaction;
+      const savedTx = await transactionApi.createTransaction(tx);
 
       setTransactions((prev) => [...prev, savedTx]);
       if (user) {
@@ -91,14 +70,7 @@ export const useTransactions = () => {
     if (!txToDelete) return;
 
     try {
-      const response = await fetch(`/api/transaction/${id}`, {
-        method: "DELETE",
-      });
-
-      if (!response.ok) {
-        console.error("Erro ao excluir transação");
-        return;
-      }
+      await transactionApi.deleteTransaction(id);
 
       setTransactions((prev) => prev.filter((t) => t.id !== id));
       if (user) {
@@ -119,26 +91,15 @@ export const useTransactions = () => {
     if (!oldTx) return;
 
     try {
-      const response = await fetch(`/api/transaction/${updatedTx.id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(updatedTx),
-      });
-
-      if (!response.ok) {
-        console.error("Erro ao editar transação");
-        return;
-      }
+      const savedTx = await transactionApi.updateTransaction(updatedTx);
 
       setTransactions((prev) =>
-        prev.map((t) => (t.id === updatedTx.id ? updatedTx : t))
+        prev.map((t) => (t.id === savedTx.id ? savedTx : t))
       );
       if (user) {
         setUser({
           ...user,
-          balance: calculateNewBalance(user, oldTx, updatedTx),
+          balance: calculateNewBalance(user, oldTx, savedTx),
         });
       }
     } catch (error) {
