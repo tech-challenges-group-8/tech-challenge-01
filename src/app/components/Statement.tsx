@@ -1,16 +1,14 @@
 "use client";
 
-import {
-  Box,
-  Typography,
-  useTheme,
-} from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-import type { Transaction } from "../contexts/UserContext";
+import { useUser, type Transaction } from "../contexts/UserContext";
 import { useTransactions } from "../hooks/useTransactions";
+import { transactionApi } from "../lib/transactionApi";
 
-import TransactionItem from "./TransactionItem"
+import TransactionItem from "./TransactionItem";
 
 interface StatementProps {
   initialTransactions?: Transaction[];
@@ -19,11 +17,37 @@ interface StatementProps {
 export default function Statement({ initialTransactions }: StatementProps) {
   const { t } = useTranslation();
   const theme = useTheme();
-  const hookTransactions = useTransactions().transactions;
-  const transactions = initialTransactions || hookTransactions;
+  const { user } = useUser();
+  const { setTransactions } = useTransactions();
+  const [transactions, setTransactionsInner] = useState<Transaction[]>([]);
+
+  const loadTransactions = useCallback(async () => {
+    if (!user?.account) {
+      setTransactions([]);
+      return;
+    }
+
+    try {
+      const transactionsData = await transactionApi.getTransactions(
+        user.account
+      );
+      setTransactions(transactionsData);
+      setTransactionsInner(transactionsData);
+    } catch (error) {
+      console.error("Erro de rede ao carregar transações:", error);
+      setTransactions([]);
+    }
+  }, [user?.balance]);
+
+  // useEffect to load transactions
+  useEffect(() => {
+    loadTransactions();
+  }, [user]);
+
+  const displayTransactions = initialTransactions || transactions;
 
   const uniqueTransactions = Array.from(
-    new Map(transactions.map((t) => [t.id, t])).values()
+    new Map(displayTransactions.map((t) => [t.id, t])).values()
   );
 
   const groupedByMonth = uniqueTransactions.reduce<

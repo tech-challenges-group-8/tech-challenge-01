@@ -2,6 +2,7 @@
 
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import Box from "@mui/material/Box";
+import { SnackbarProvider } from "notistack";
 import { Suspense } from "react";
 
 import BalanceCard from "@/app/components/BalanceCard";
@@ -13,7 +14,6 @@ import "../commons/i18n";
 import Statement from "../components/Statement";
 import { UserProvider } from "../contexts/UserContext";
 import theme from "../styles/theme";
-import { SnackbarProvider } from "notistack";
 
 export default function DashboardLayout({
   children,

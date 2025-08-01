@@ -7,11 +7,12 @@ import type { VariantType } from "notistack";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+import { authApi } from "../../lib/authApi";
+import { userApi } from "../../lib/userApi";
+
 import CustomButton from "./CustomButton";
 import LoginDialog from "./LoginDialog";
 import RegisterDialog from "./RegisterDialog";
-import { authApi } from "../../lib/authApi";
-import { userApi } from "../../lib/userApi";
 
 export default function ButtonsAccount() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);

@@ -1,6 +1,5 @@
 "use client";
 
-import Cookies from "js-cookie";
 import React, {
   createContext,
   useContext,
@@ -8,6 +7,7 @@ import React, {
   ReactNode,
   useEffect,
 } from "react";
+
 import { userApi } from "../lib/userApi";
 
 export interface User {
@@ -18,11 +18,18 @@ export interface User {
   active: boolean;
 }
 
-export type Transaction = {
+export type NewTransaction = {
   accountId: string;
   type: "DEPOSIT" | "TRANSFER";
   value: number;
-  date?: string;
+};
+
+export type Transaction = {
+  id: string;
+  accountId: string;
+  type: "DEPOSIT" | "TRANSFER";
+  value: number;
+  date: string;
 };
 
 export interface UserContextType {

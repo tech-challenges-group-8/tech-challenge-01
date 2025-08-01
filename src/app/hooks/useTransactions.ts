@@ -1,6 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { Transaction, User, useUser } from "../contexts/UserContext";
+import { NewTransaction, Transaction, User, useUser } from "../contexts/UserContext";
 import { transactionApi } from "../lib/transactionApi";
 
 export const useTransactions = () => {
@@ -26,28 +26,8 @@ export const useTransactions = () => {
     return balance;
   };
 
-  // useEffect to load transactions
-  useEffect(() => {
-    const loadTransactions = async () => {
-      if (!user?.account) {
-        setTransactions([]);
-        return;
-      }
-
-      try {
-        const transactionsData = await transactionApi.getTransactions(user.account);
-        setTransactions(transactionsData);
-      } catch (error) {
-        console.error("Erro de rede ao carregar transações:", error);
-        setTransactions([]);
-      }
-    };
-
-    loadTransactions();
-  }, [user, setUser]);
-
   // Add Transaction
-  const addTransaction = async (tx: Transaction) => {
+  const addTransaction = async (tx: NewTransaction) => {
     try {
       const savedTx = await transactionApi.createTransaction(tx);
 
@@ -108,9 +88,9 @@ export const useTransactions = () => {
   };
 
   return {
-    transactions,
     addTransaction,
     deleteTransaction,
     editTransaction,
+    setTransactions,
   };
 };
