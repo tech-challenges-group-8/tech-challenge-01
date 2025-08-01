@@ -2,8 +2,8 @@
 
 import { Box } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { SnackbarProvider, useSnackbar } from "notistack";
-import type { VariantType } from "notistack"; 
+import { useSnackbar } from "notistack";
+import type { VariantType } from "notistack";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -13,7 +13,7 @@ import RegisterDialog from "./RegisterDialog";
 import { authApi } from "../../lib/authApi";
 import { userApi } from "../../lib/userApi";
 
-function ButtonsAccount() {
+export default function ButtonsAccount() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
   const { enqueueSnackbar } = useSnackbar();
@@ -51,8 +51,10 @@ function ButtonsAccount() {
 
     try {
       const data = await authApi.login(email, password);
+      localStorage.setItem("token", data.result.token); // Store the token
       handleClickVariant("success", t("account.loginSuccess"))();
       setIsLoginOpen(false);
+      console.log("go to dashboard");
       router.push("/dashboard");
     } catch (err: any) {
       setError(t("account.loginFailed") + err.message);
@@ -81,7 +83,7 @@ function ButtonsAccount() {
 
     try {
       const data = await userApi.createUser({
-        name: userName,
+        username: userName,
         email: email,
         password: password,
       });
@@ -164,13 +166,5 @@ function ButtonsAccount() {
         t={t}
       />
     </Box>
-  );
-}
-
-export default function IntegrationNotistack() {
-  return (
-    <SnackbarProvider maxSnack={3}>
-      <ButtonsAccount />
-    </SnackbarProvider>
   );
 }

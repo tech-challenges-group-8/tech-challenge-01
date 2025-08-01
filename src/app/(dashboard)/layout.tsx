@@ -13,6 +13,7 @@ import "../commons/i18n";
 import Statement from "../components/Statement";
 import { UserProvider } from "../contexts/UserContext";
 import theme from "../styles/theme";
+import { SnackbarProvider } from "notistack";
 
 export default function DashboardLayout({
   children,
@@ -23,39 +24,51 @@ export default function DashboardLayout({
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Suspense fallback={<div>Loading...</div>}>
-        <UserProvider>
-          <Box>
-            <Header />
-            <Box
-              sx={{
-                display: "flex",
-                backgroundColor: theme.palette.background.default,
-                padding: "16px",
-                gap: "16px",
-                justifyContent: "center",
-                alignItems: "flex-start",
-                flexDirection: {
-                  xs: "column",
-                  sm: "column",
-                  lg: "row",
-                },
-              }}
-            >
-              <Sidebar />
+        <SnackbarProvider 
+          maxSnack={3}
+          anchorOrigin={{
+            vertical: 'bottom',
+            horizontal: 'right',
+          }}
+          autoHideDuration={5000} // 5 seconds
+        >
+          <UserProvider>
+            <Box>
+              <Header />
               <Box
                 sx={{
-                  display: "grid",
-                  gridGap: "16px",
-                  width: { xs: `calc(100% - ${theme.spacing(2)})`, md: "100%" },
+                  display: "flex",
+                  backgroundColor: theme.palette.background.default,
+                  padding: "16px",
+                  gap: "16px",
+                  justifyContent: "center",
+                  alignItems: "flex-start",
+                  flexDirection: {
+                    xs: "column",
+                    sm: "column",
+                    lg: "row",
+                  },
                 }}
               >
-                <BalanceCard />
-                <CardBackground>{children}</CardBackground>
+                <Sidebar />
+                <Box
+                  sx={{
+                    display: "grid",
+                    gridGap: "16px",
+                    width: {
+                      xs: `calc(100% - ${theme.spacing(2)})`,
+                      md: "100%",
+                    },
+                  }}
+                >
+                  <BalanceCard />
+                  <CardBackground>{children}</CardBackground>
+                </Box>
+                <Statement />
               </Box>
-              <Statement />
             </Box>
-          </Box>
-        </UserProvider>
+          </UserProvider>
+        </SnackbarProvider>
       </Suspense>
     </ThemeProvider>
   );

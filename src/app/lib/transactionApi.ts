@@ -1,37 +1,34 @@
 import { Transaction } from "../contexts/UserContext";
+import { apiClient } from "./apiClient";
 
 export const transactionApi = {
-  getTransactions: async (userId: string) => {
-    const response = await fetch(`/api/transaction?userId=${userId}`);
+  getTransactions: async (id: string) => {
+    const response = await apiClient.get(`/account/${id}/statement`);
     const data = await response.json();
     
-    if (!response.ok || !data.success) {
+    if (!response.ok) {
       throw new Error(data.message || "Failed to load transactions");
     }
     
-    return data.transactions;
+    return data.result.transactions.sort((a: Transaction, b: Transaction) => {
+      return new Date(b.date).getTime() - new Date(a.date).getTime();
+    });
   },
 
   createTransaction: async (transaction: Transaction) => {
-    const response = await fetch("/api/transaction", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(transaction),
-    });
+    const response = await apiClient.post("/account/transaction", transaction);
 
     const data = await response.json();
     
-    if (!response.ok || !data.success) {
+    if (!response.ok) {
       throw new Error(data.message || "Failed to create transaction");
     }
     
-    return data.transaction;
+    return data.result;
   },
 
   deleteTransaction: async (id: string) => {
-    const response = await fetch(`/api/transaction/${id}`, {
-      method: "DELETE",
-    });
+    const response = await apiClient.delete(`/transaction/${id}`);
 
     if (!response.ok) {
       throw new Error("Failed to delete transaction");
@@ -39,13 +36,7 @@ export const transactionApi = {
   },
 
   updateTransaction: async (transaction: Transaction) => {
-    const response = await fetch(`/api/transaction/${transaction.id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(transaction),
-    });
+    const response = await apiClient.patch(`/transaction/${transaction.id}`, transaction);
 
     if (!response.ok) {
       throw new Error("Failed to update transaction");

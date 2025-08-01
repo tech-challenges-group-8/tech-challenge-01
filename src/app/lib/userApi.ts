@@ -1,27 +1,23 @@
+import { apiClient } from "./apiClient";
+
 export const userApi = {
   getUserSession: async () => {
-    const response = await fetch(`/api/user-session`);
+    const response = await apiClient.get(`/account`);
     const data = await response.json();
 
-    if (!response.ok || !data.success) {
+    if (!response.ok) {
       throw new Error(data.message || "Failed to get user session");
     }
 
-    return data.user;
+    return data.result;
   },
 
-  createUser: async (userData: { name: string; email: string; password: string }) => {
-    const response = await fetch("/api/user", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(userData),
-    });
+  createUser: async (userData: { username: string; email: string; password: string }) => {
+    const response = await apiClient.postPublic("/user", userData);
     
     const data = await response.json();
 
-    if (!response.ok || !data.success) {
+    if (!response.ok) {
       throw new Error(data.message || "Failed to create user");
     }
 

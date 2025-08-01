@@ -11,7 +11,7 @@ import React, {
 import { userApi } from "../lib/userApi";
 
 export interface User {
-  id: string;
+  account: string;
   name: string;
   email: string;
   balance: number;
@@ -19,10 +19,10 @@ export interface User {
 }
 
 export type Transaction = {
-  id: string;
+  accountId: string;
   type: "DEPOSIT" | "TRANSFER";
   value: number;
-  date: string;
+  date?: string;
 };
 
 export interface UserContextType {
@@ -37,20 +37,24 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const normalizeUser = (u: any): User => ({
     ...u,
-    id: String(u.id),
-    balance: u.balance != null ? Number(u.balance) : 0,
+    account: u.account[0].id,
+    balance: u.transactions
+      ? u.transactions.reduce((sum: number, t: any) => sum + Number(t.value), 0)
+      : u.balance != null
+      ? Number(u.balance)
+      : 0,
   });
 
   useEffect(() => {
     const loadUserFromCookies = async () => {
       try {
         const userData = await userApi.getUserSession();
-        setUser(normalizeUser(userData));
+        const newUser = normalizeUser(userData);
+        setUser(newUser);
       } catch (error) {
         console.error("Erro ao buscar usuário:", error);
         setUser(null);
-        Cookies.remove("userId");
-        Cookies.remove("auth");
+        localStorage.removeItem("token")
       }
     };
 

@@ -1,7 +1,17 @@
 "use client";
 
-import MenuIcon from '@mui/icons-material/Menu';
-import { AppBar, Toolbar, Typography, Box, Avatar, useTheme, IconButton, Menu, MenuItem } from '@mui/material';
+import MenuIcon from "@mui/icons-material/Menu";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Avatar,
+  useTheme,
+  IconButton,
+  Menu,
+  MenuItem,
+} from "@mui/material";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
 import React, { useState } from "react";
@@ -26,8 +36,9 @@ const Header = () => {
     setAnchorEl(null);
   };
 
- 
-  const [sidebarAnchorEl, setSidebarAnchorEl] = useState<null | HTMLElement>(null);
+  const [sidebarAnchorEl, setSidebarAnchorEl] = useState<null | HTMLElement>(
+    null
+  );
   const sidebarOpen = Boolean(sidebarAnchorEl);
   const pathname = usePathname();
 
@@ -42,15 +53,9 @@ const Header = () => {
   const handleLogout = async () => {
     handleClose();
     try {
-      const response = await fetch("/api/logout", {
-        method: "POST",
-      });
-      if (response.ok) {
-        setUser(null);
-        router.push("/");
-      } else {
-        console.error("Logout failed");
-      }
+      setUser(null);
+      localStorage.removeItem("token");
+      router.push("/");
     } catch (error) {
       console.error("Error during logout:", error);
     }
@@ -140,7 +145,7 @@ const Header = () => {
         open={sidebarOpen}
         onClose={handleSidebarClose}
         MenuListProps={{
-          'aria-labelledby': 'sidebar-menu-button',
+          "aria-labelledby": "sidebar-menu-button",
         }}
       >
         <MenuItem

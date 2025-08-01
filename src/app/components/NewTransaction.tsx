@@ -11,13 +11,12 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-
-// Import Transaction type
-// Keep useUser for other user data if needed
-import { useTransactions } from "../hooks/useTransactions"; // Import useTransactions hook
-
+import { useTransactions } from "../hooks/useTransactions";
 import LoadingButton from "./LoadingButton";
 import NumericInputField from "./NumericInputField";
+import { useUser } from "../contexts/UserContext";
+import { useSnackbar } from "notistack";
+import type { VariantType } from "notistack";
 
 const TRANSACTION_TYPES = (t: any) => [
   { value: "DEPOSIT", label: t("newTransaction.typeDeposit") },
@@ -25,12 +24,14 @@ const TRANSACTION_TYPES = (t: any) => [
 ];
 
 export default function NewTransaction() {
-  const { addTransaction } = useTransactions(); // Get addTransaction from useTransactions hook
+  const { addTransaction } = useTransactions();
   const [type, setType] = useState("");
   const [value, setValue] = useState("");
   const [error, setError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
+  const { user } = useUser();
   const { t } = useTranslation();
 
   const commonInputStyles = {
@@ -44,6 +45,10 @@ export default function NewTransaction() {
     "& .MuiOutlinedInput-notchedOutline": {
       border: "none",
     },
+  };
+
+  const handleFeedback = (variant: VariantType, message: string) => () => {
+    enqueueSnackbar(message, { variant });
   };
 
   const handleSubmit = async () => {
@@ -64,19 +69,21 @@ export default function NewTransaction() {
     setError("");
 
     const newTransaction = {
-      id: crypto.randomUUID(), // ou deixe o backend gerar
+      accountId: user?.account || "",
       type: type as "DEPOSIT" | "TRANSFER",
       value: parsedValue,
-      date: new Date().toISOString(),
     };
 
     try {
-      await addTransaction(newTransaction); // Call addTransaction from hook
+      await addTransaction(newTransaction);
       setType("");
       setValue("");
+
+      handleFeedback("success", "Transação cadastrada")();
     } catch (err) {
       console.error("Erro ao adicionar transação:", err);
       setError("Erro ao adicionar transação.");
+      handleFeedback("error", "Erro ao adicionar transação")();
     } finally {
       setIsSubmitting(false);
     }
@@ -84,7 +91,13 @@ export default function NewTransaction() {
 
   return (
     <>
-      <Typography variant="h4" fontWeight="bold" color="#dee9ea" mb={2} sx={{ color: { xs: theme.palette.primary.main, sm: '#dee9ea' } }}>
+      <Typography
+        variant="h4"
+        fontWeight="bold"
+        color="#dee9ea"
+        mb={2}
+        sx={{ color: { xs: theme.palette.primary.main, sm: "#dee9ea" } }}
+      >
         {t("newTransaction.title")}
       </Typography>
 
@@ -133,7 +146,12 @@ export default function NewTransaction() {
         </FormControl>
 
         <Box>
-          <Typography variant="body1" fontWeight={600} mb={1} sx={{ color: { xs: theme.palette.primary.main, sm: '#dee9ea' } }}>
+          <Typography
+            variant="body1"
+            fontWeight={600}
+            mb={1}
+            sx={{ color: { xs: theme.palette.primary.main, sm: "#dee9ea" } }}
+          >
             {t("newTransaction.valueLabel")}
           </Typography>
           <NumericInputField

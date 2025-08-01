@@ -1,16 +1,12 @@
+import { apiClient } from "./apiClient";
+
 export const authApi = {
   login: async (email: string, password: string) => {
-    const response = await fetch("/api/auth", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email, password }),
-    });
+    const response = await apiClient.postPublic("/user/auth", { email, password });
 
     const data = await response.json();
 
-    if (!response.ok || !data.success) {
+    if (!response.ok) {
       throw new Error(data.message || "Login failed");
     }
 

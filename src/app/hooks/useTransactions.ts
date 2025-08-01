@@ -29,13 +29,13 @@ export const useTransactions = () => {
   // useEffect to load transactions
   useEffect(() => {
     const loadTransactions = async () => {
-      if (!user?.id) {
+      if (!user?.account) {
         setTransactions([]);
         return;
       }
 
       try {
-        const transactionsData = await transactionApi.getTransactions(user.id);
+        const transactionsData = await transactionApi.getTransactions(user.account);
         setTransactions(transactionsData);
       } catch (error) {
         console.error("Erro de rede ao carregar transações:", error);
