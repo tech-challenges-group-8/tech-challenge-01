@@ -101,8 +101,8 @@ export async function GET(request: Request) {
     (tx: any) => String(tx.userId) === String(userId)
   );
 
-  // Sort transactions by date in descending order
-  userTransactions.sort((a: any, b: any) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  // Sort transactions by date in ascending order
+  userTransactions.sort((a: any, b: any) => new Date(a.date).getTime() - new Date(b.date).getTime());
 
   // Implement pagination
   const startIndex = (page - 1) * limit;
