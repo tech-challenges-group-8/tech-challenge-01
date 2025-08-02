@@ -10,12 +10,14 @@ import { withUserContext } from './decorators/withUserContext';
 const mockTransactions: Transaction[] = [
   {
     id: "1",
+    accountId: "1",
     date: "2024-05-15T10:00:00Z",
     type: "DEPOSIT",
     value: 5000,
   },
   {
     id: "2",
+    accountId: "1",
     date: "2024-06-15T10:00:00Z",
     type: "TRANSFER",
     value: 5000.5,

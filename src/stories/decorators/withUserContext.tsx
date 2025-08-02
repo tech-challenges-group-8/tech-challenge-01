@@ -4,6 +4,7 @@ import { UserContext, UserContextType } from '../../app/contexts/UserContext';
 
 const mockUser = {
   id: '1',
+  account: "1",
   name: 'John Doe',
   email: 'john.doe@example.com',
   balance: 1234.56,

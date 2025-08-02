@@ -1,4 +1,9 @@
 import type { StorybookConfig } from '@storybook/nextjs';
+import { fileURLToPath } from "url";
+import { dirname, resolve } from "path";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
   "stories": [
@@ -24,8 +29,8 @@ const config: StorybookConfig = {
     config.resolve = config.resolve || {};
     config.resolve.alias = {
       ...config.resolve.alias,
-      "next/navigation": require.resolve("../src/__mocks__/next/navigation.ts"),
-      "next/link": require.resolve("../src/__mocks__/next/link.tsx"),
+      "next/navigation": resolve(__dirname, "../src/__mocks__/next/navigation.ts"),
+      "next/link": resolve(__dirname, "../src/__mocks__/next/link.tsx"),
     };
     return config;
   },

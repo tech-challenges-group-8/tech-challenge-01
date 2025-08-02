@@ -15,7 +15,7 @@ This is a **Financial Management** application built with [Next.js](https://next
 Make sure you have the following installed on your system:
 
 - [Node.js](https://nodejs.org/) (v23 or higher recommended)
-- [npm](https://www.npmjs.com/) (comes with Node.js) or [yarn](https://yarnpkg.com/)
+- [npm](https://www.npmjs.com/) (comes with Node.js)
 
 ## Getting Started
 
@@ -102,7 +102,6 @@ financial-management/
 ├── postcss.config.mjs      # PostCSS configuration
 ├── README.md               # Project documentation
 ├── tsconfig.json           # TypeScript configuration
-└── yarn.lock               # Yarn dependency lock file
 ```
 
 ## Storybook Commands
@@ -134,4 +133,59 @@ The static build will be output to the `storybook-static` directory.
 - <img src="https://avatars.githubusercontent.com/u/71905861?v=4" width="24" height="24" alt="Osmar" style="border-radius: 50%; vertical-align: middle;"> **Osmar** - [https://github.com/MazFilho](https://github.com/MazFilho)
 
 - <img src="https://avatars.githubusercontent.com/u/13469487?v=4" width="24" height="24" alt="Vittoria Zago" style="border-radius: 50%; vertical-align: middle;"> **Vittoria Zago** - [https://github.com/vittoriazago](https://github.com/vittoriazago)
+
+## Docker e Docker Compose
+
+Este projeto inclui um `Dockerfile` para criar a imagem do frontend e um arquivo `docker-compose.yml` para orquestrar todos os serviços necessários (frontend, backend e banco de dados MongoDB).
+
+### Pré-requisitos
+
+- [Docker](https://www.docker.com/get-started)
+- [Docker Compose](https://docs.docker.com/compose/)
+
+### Como usar
+
+1. **Build imagem local:**
+
+   No diretório raiz do projeto, execute:
+
+   ```bash
+   docker build . -t tech-challange-front
+   ```
+
+
+1. **Build e start dos containers:**
+
+   No diretório raiz do projeto, execute:
+
+   ```bash
+   docker-compose up --build
+   ```
+
+   Isso irá:
+   - Construir a imagem do frontend usando o `Dockerfile`
+   - Subir os containers do frontend, backend e MongoDB
+   - Expor o frontend em `http://localhost:3000` e o backend em `http://localhost:5000`
+
+2. **Parar os containers:**
+
+   ```bash
+   docker-compose down
+   ```
+
+3. **Persistência de dados:**
+
+   O MongoDB utiliza um volume Docker chamado `mongo_data` para persistir os dados mesmo após parar os containers.
+
+### Estrutura dos arquivos
+
+- `Dockerfile`: Define como a imagem do frontend é construída.
+- `docker-compose.yml`: Orquestra os serviços do frontend, backend e banco de dados.
+
+> **Dica:** Se alterar configurações de rede no `docker-compose.yml`, pode ser necessário remover a rede antiga com:
+> ```bash
+> docker network rm tech-challenge-01_tech-challenge-network
+> ```
+
+Assim, você pode rodar toda a aplicação localmente sem instalar dependências do Node.js ou MongoDB na sua máquina.
 

@@ -12,6 +12,11 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+   "engines": {
+    "node": ">=23.0.0",
+    "npm": ">=8.0.0",
+    "yarn": "please-dont-use-yarn"
+  },
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
